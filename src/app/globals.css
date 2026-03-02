@@ -7,8 +7,10 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+
+  --font-heading: var(--font-heading);
+  --font-base: var(--font-base);
+
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -17,11 +19,13 @@
   --color-sidebar-primary: var(--sidebar-primary);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar: var(--sidebar);
+
   --color-chart-5: var(--chart-5);
   --color-chart-4: var(--chart-4);
   --color-chart-3: var(--chart-3);
   --color-chart-2: var(--chart-2);
   --color-chart-1: var(--chart-1);
+
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
@@ -38,6 +42,7 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -46,116 +51,145 @@
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
 
-  /* ── Sarthigo Brand Tokens (use anywhere as CSS vars) ── */
-  --color-brand-teal: var(--brand-teal);
-  --color-brand-teal-dark: var(--brand-teal-dark);
-  --color-brand-teal-light: var(--brand-teal-light);
-  --color-brand-gold: var(--brand-gold);
-  --color-brand-gold-dark: var(--brand-gold-dark);
-  --color-brand-gold-light: var(--brand-gold-light);
+  /* ── Sarthigo Brand Tokens (use anywhere as Tailwind classes) ── */
+  --color-brand-primary: var(--brand-primary);
+  --color-brand-primary-dark: var(--brand-primary-dark);
+  --color-brand-primary-light: var(--brand-primary-light);
+  --color-brand-orange: var(--brand-orange);
+  --color-brand-orange-dark: var(--brand-orange-dark);
+  --color-brand-orange-light: var(--brand-orange-light);
 }
 
+/* ═══════════════════════════════════════════════
+   LIGHT MODE
+═══════════════════════════════════════════════ */
 :root {
   --radius: 0.625rem;
 
-  /* ── Sarthigo Brand Colors ── */
-  /* Change these → reflects everywhere automatically */
-  --brand-teal: oklch(0.52 0.15 185); /* #0E9488 deep teal   */
-  --brand-teal-dark: oklch(0.4 0.14 185); /* darker teal hover   */
-  --brand-teal-light: oklch(0.93 0.05 185); /* soft teal bg tint   */
-  --brand-gold: oklch(0.78 0.16 85); /* #D4A017 warm gold   */
-  --brand-gold-dark: oklch(0.65 0.15 80); /* darker gold hover   */
-  --brand-gold-light: oklch(0.96 0.04 85); /* soft gold bg tint   */
+  /* ── SarthiGo Brand Colors ──────────────────
+     ✏️  Only change values here — reflects site-wide
+  ─────────────────────────────────────────── */
+  --brand-primary: oklch(0.35 0.15 260); /* Navy Blue  #1B3A6B */
+  --brand-primary-dark: oklch(0.25 0.14 260); /* Darker navy        */
+  --brand-primary-light: oklch(0.93 0.04 260); /* Soft blue bg tint  */
+  --brand-orange: oklch(0.72 0.19 50); /* Orange     #F47B20 */
+  --brand-orange-dark: oklch(0.6 0.18 50); /* Darker orange      */
+  --brand-orange-light: oklch(0.96 0.04 50); /* Soft orange bg     */
 
-  /* ── shadcn Semantic Tokens (mapped to Sarthigo palette) ── */
-  --background: oklch(0.99 0 0); /* near white          */
-  --foreground: oklch(0.18 0.01 255); /* near black          */
+  /* ── shadcn Semantic Tokens ─────────────────
+     Mapped to Sarthigo palette above
+  ─────────────────────────────────────────── */
+  --background: oklch(0.99 0 0);
+  --foreground: oklch(0.18 0.01 255);
+
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.18 0.01 255);
+
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.18 0.01 255);
 
-  --primary: var(--brand-teal); /* teal = primary CTA  */
-  --primary-foreground: oklch(0.99 0 0); /* white text on teal  */
+  --primary: var(--brand-primary); /* Navy = main CTA    */
+  --primary-foreground: oklch(0.99 0 0); /* White text on navy */
 
-  --secondary: var(--brand-gold); /* gold = secondary    */
-  --secondary-foreground: oklch(0.18 0.01 255); /* dark text on gold   */
+  --secondary: var(--brand-orange); /* Orange = secondary */
+  --secondary-foreground: oklch(0.99 0 0); /* White text on orange */
 
-  --muted: oklch(0.96 0.01 185); /* teal-tinted muted   */
-  --muted-foreground: oklch(0.5 0.02 185);
+  --muted: var(--brand-primary-light); /* Soft navy bg       */
+  --muted-foreground: oklch(0.5 0.04 260);
 
-  --accent: var(--brand-gold-light); /* gold light accent   */
+  --accent: var(--brand-orange-light); /* Soft orange accent */
   --accent-foreground: oklch(0.18 0.01 255);
 
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.9 0.02 185); /* teal-tinted border  */
-  --input: oklch(0.9 0.02 185);
-  --ring: var(--brand-teal);
 
-  /* ── Chart colors (Sarthigo data palette) ── */
-  --chart-1: var(--brand-teal);
-  --chart-2: var(--brand-gold);
+  --border: oklch(0.9 0.02 260); /* Navy-tinted border */
+  --input: oklch(0.9 0.02 260);
+  --ring: var(--brand-primary);
+
+  /* ── Charts ── */
+  --chart-1: var(--brand-primary);
+  --chart-2: var(--brand-orange);
   --chart-3: oklch(0.6 0.14 210);
   --chart-4: oklch(0.75 0.16 60);
   --chart-5: oklch(0.65 0.18 30);
 
-  /* ── Sidebar (driver dashboard) ── */
-  --sidebar: oklch(0.97 0.02 185);
+  /* ── Driver Dashboard Sidebar ── */
+  --sidebar: var(--brand-primary-light);
   --sidebar-foreground: oklch(0.18 0.01 255);
-  --sidebar-primary: var(--brand-teal);
+  --sidebar-primary: var(--brand-primary);
   --sidebar-primary-foreground: oklch(0.99 0 0);
-  --sidebar-accent: var(--brand-teal-light);
+  --sidebar-accent: oklch(0.88 0.05 260);
   --sidebar-accent-foreground: oklch(0.18 0.01 255);
-  --sidebar-border: oklch(0.88 0.03 185);
-  --sidebar-ring: var(--brand-teal);
+  --sidebar-border: oklch(0.86 0.04 260);
+  --sidebar-ring: var(--brand-primary);
 }
 
+/* ═══════════════════════════════════════════════
+   DARK MODE
+═══════════════════════════════════════════════ */
 .dark {
-  --background: oklch(0.13 0.02 255);
+  --background: oklch(0.13 0.02 260);
   --foreground: oklch(0.95 0 0);
-  --card: oklch(0.18 0.02 255);
+
+  --card: oklch(0.18 0.02 260);
   --card-foreground: oklch(0.95 0 0);
-  --popover: oklch(0.18 0.02 255);
+
+  --popover: oklch(0.18 0.02 260);
   --popover-foreground: oklch(0.95 0 0);
 
-  --primary: oklch(0.62 0.15 185); /* lighter teal in dark */
-  --primary-foreground: oklch(0.13 0.02 255);
+  --primary: oklch(0.6 0.14 260); /* Lighter navy in dark  */
+  --primary-foreground: oklch(0.99 0 0);
 
-  --secondary: var(--brand-gold);
-  --secondary-foreground: oklch(0.13 0.02 255);
+  --secondary: var(--brand-orange);
+  --secondary-foreground: oklch(0.13 0.02 260);
 
-  --muted: oklch(0.22 0.03 255);
-  --muted-foreground: oklch(0.65 0.02 185);
+  --muted: oklch(0.22 0.03 260);
+  --muted-foreground: oklch(0.65 0.04 260);
 
-  --accent: oklch(0.25 0.04 185);
+  --accent: oklch(0.28 0.05 50); /* Dark orange tint      */
   --accent-foreground: oklch(0.95 0 0);
 
   --destructive: oklch(0.704 0.191 22.216);
+
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.62 0.15 185);
+  --ring: oklch(0.6 0.14 260);
 
-  --chart-1: oklch(0.62 0.15 185);
-  --chart-2: var(--brand-gold);
+  /* ── Charts dark ── */
+  --chart-1: oklch(0.6 0.14 260);
+  --chart-2: var(--brand-orange);
   --chart-3: oklch(0.7 0.14 210);
   --chart-4: oklch(0.8 0.16 60);
   --chart-5: oklch(0.7 0.18 30);
 
-  --sidebar: oklch(0.18 0.02 255);
+  /* ── Sidebar dark ── */
+  --sidebar: oklch(0.18 0.02 260);
   --sidebar-foreground: oklch(0.95 0 0);
-  --sidebar-primary: oklch(0.62 0.15 185);
+  --sidebar-primary: oklch(0.6 0.14 260);
   --sidebar-primary-foreground: oklch(0.95 0 0);
-  --sidebar-accent: oklch(0.22 0.03 255);
+  --sidebar-accent: oklch(0.22 0.03 260);
   --sidebar-accent-foreground: oklch(0.95 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.62 0.15 185);
+  --sidebar-ring: oklch(0.6 0.14 260);
 }
 
+/* ═══════════════════════════════════════════════
+   BASE STYLES
+═══════════════════════════════════════════════ */
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-base), sans-serif;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-heading), sans-serif;
   }
 }

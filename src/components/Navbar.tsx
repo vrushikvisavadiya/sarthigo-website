@@ -15,25 +15,7 @@ import {
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-
-// ── Nav Links ──────────────────────────────────────────────
-const NAV_LINKS = [
-  { label: "Home", href: "/" },
-  { label: "Packages", href: "/packages" },
-  { label: "Drivers", href: "/drivers" },
-  { label: "About", href: "/about" },
-  { label: "Contact", href: "/contact" },
-];
-
-// ── Cities Dropdown ────────────────────────────────────────
-const CITIES = [
-  { label: "Somnath", href: "/city/somnath", icon: "🛕" },
-  { label: "Dwarka", href: "/city/dwarka", icon: "🐚" },
-  { label: "Gir", href: "/city/gir", icon: "🦁" },
-  { label: "Junagadh", href: "/city/junagadh", icon: "🏰" },
-  { label: "Ambaji", href: "/city/ambaji", icon: "⛰️" },
-  { label: "Kutch", href: "/city/kutch", icon: "🏜️" },
-];
+import { CITIES, NAV_LINKS, siteConfig } from "@/constants";
 
 // ── Component ──────────────────────────────────────────────
 export function Navbar() {
@@ -47,8 +29,8 @@ export function Navbar() {
         {/* ── Logo ── */}
         <Link href="/" className="flex items-center gap-2 group">
           <Image
-            src="/logo/logo.png"
-            alt="Sarthigo – Taxi & Tour Booking"
+            src={siteConfig.logo}
+            alt={siteConfig.name}
             width={160}
             height={48}
             className="h-10 w-auto object-contain"
@@ -171,8 +153,8 @@ export function Navbar() {
                   className="flex items-center"
                 >
                   <Image
-                    src="/logo/logo.png"
-                    alt="Sarthigo"
+                    src={siteConfig.logo}
+                    alt={siteConfig.name}
                     width={130}
                     height={40}
                     className="h-9 w-auto object-contain"

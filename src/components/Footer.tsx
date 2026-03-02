@@ -1,7 +1,14 @@
 import Link from "next/link";
 import Image from "next/image";
-import { MapPin, Phone, Mail } from "lucide-react";
-import { FaWhatsapp } from "react-icons/fa6";
+
+import {
+  FaFacebookF,
+  FaInstagram,
+  FaPhone,
+  FaWhatsapp,
+  FaXTwitter,
+  FaYoutube,
+} from "react-icons/fa6";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -10,6 +17,7 @@ import {
   SOCIAL_LINKS,
   whatsappBookingUrl,
 } from "@/constants";
+import { Mail, MapPin } from "lucide-react";
 
 export function Footer() {
   return (
@@ -64,12 +72,12 @@ export function Footer() {
             </p>
 
             {/* Contact Info */}
-            <div className="flex flex-col gap-2.5 text-sm text-background/70">
+            <div className="flex flex-col gap-2.5 text-sm text-background/70 ">
               <a
                 href={`tel:${siteConfig.contact.phone}`}
                 className="flex items-center gap-2 hover:text-background transition-colors"
               >
-                <Phone className="h-4 w-4 text-secondary shrink-0" />
+                <FaPhone className="h-4 w-4 text-secondary shrink-0" />
                 {siteConfig.contact.phoneDisplay}
               </a>
               <a
@@ -87,18 +95,29 @@ export function Footer() {
 
             {/* Social Icons */}
             <div className="flex items-center gap-2 pt-1">
-              {SOCIAL_LINKS.map((s) => (
-                <a
-                  key={s.label}
-                  href={s.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={s.label}
-                  className="flex h-9 w-9 items-center justify-center rounded-lg bg-background/10 text-background/70 hover:bg-secondary hover:text-secondary-foreground transition-colors"
-                >
-                  {s.iconName}
-                </a>
-              ))}
+              {SOCIAL_LINKS.map((s) => {
+                const icons: Record<string, typeof FaWhatsapp> = {
+                  FaWhatsapp,
+                  FaInstagram,
+                  FaFacebookF,
+                  FaXTwitter,
+                  FaYoutube,
+                };
+                const Icon = icons[s.iconName];
+
+                return (
+                  <a
+                    key={s.label}
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={s.label}
+                    className="flex h-9 w-9 items-center justify-center rounded-lg bg-background/10 text-background/70 hover:bg-secondary hover:text-secondary-foreground transition-colors"
+                  >
+                    {Icon && <Icon className="h-4 w-4 text-white" />}
+                  </a>
+                );
+              })}
             </div>
           </div>
 

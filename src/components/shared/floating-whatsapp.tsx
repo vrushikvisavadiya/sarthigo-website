@@ -5,6 +5,7 @@ import { m, AnimatePresence } from "motion/react";
 import { X, MessageCircle } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa6";
 import { whatsappBookingUrl, siteConfig } from "@/constants";
+import Image from "next/image";
 
 export function FloatingWhatsApp() {
   const [isOpen, setIsOpen] = useState(false);
@@ -34,7 +35,13 @@ export function FloatingWhatsApp() {
                 <div className="flex items-center gap-3 bg-green-500 px-4 py-3">
                   <div className="relative">
                     <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/20 text-white">
-                      <FaWhatsapp className="h-6 w-6" />
+                      <Image
+                        src={siteConfig.logoSingle}
+                        alt={siteConfig.name}
+                        width={32}
+                        height={32}
+                        className="object-contain"
+                      />
                     </div>
                     <span className="absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-green-500 bg-green-300" />
                   </div>

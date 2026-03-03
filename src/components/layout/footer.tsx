@@ -7,6 +7,8 @@ import {
   FOOTER_LINKS,
   CITIES,
 } from "@/constants";
+import Image from "next/image";
+import { Logo } from "@/components/shared/logo";
 
 export function Footer() {
   return (
@@ -52,17 +54,7 @@ export function Footer() {
           <div className="col-span-2 md:col-span-3 lg:col-span-2 flex flex-col gap-5">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2.5 w-fit">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/15 font-heading font-black text-white text-sm">
-                SG
-              </div>
-              <div className="flex flex-col leading-none">
-                <span className="font-heading font-black text-white text-xl">
-                  {siteConfig.name}
-                </span>
-                <span className="text-xs text-white/50">
-                  Pilgrimage Taxi & Tours
-                </span>
-              </div>
+              <Logo className="text-white [&_span]:text-white [&_.text-muted-foreground]:text-white/50" />
             </Link>
 
             {/* Tagline */}

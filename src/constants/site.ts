@@ -14,7 +14,7 @@ export const siteConfig = {
   // ── Contact ────────────────────────────────────
   contact: {
     phone: "+917984789311",
-    phoneDisplay: "+91 99999 99999",
+    phoneDisplay: "+91 7984789311",
     email: "hello@sarthigo.com",
     whatsapp: "917984789311",
     whatsappMessage: "Hi! I want to book a taxi in Somnath",

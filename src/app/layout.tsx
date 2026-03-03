@@ -25,7 +25,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteConfig.url),
+  // metadataBase: new URL(siteConfig.url),
 
   title: {
     default: siteConfig.fullName,

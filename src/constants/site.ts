@@ -13,17 +13,17 @@ export const siteConfig = {
 
   // ── Contact ────────────────────────────────────
   contact: {
-    phone: "+919999999999",
+    phone: "+917984789311",
     phoneDisplay: "+91 99999 99999",
     email: "hello@sarthigo.com",
-    whatsapp: "919999999999",
+    whatsapp: "917984789311",
     whatsappMessage: "Hi! I want to book a taxi in Somnath",
     address: "Somnath, Gujarat, India",
   },
 
   // ── Social ─────────────────────────────────────
   social: {
-    whatsapp: "https://wa.me/919999999999",
+    whatsapp: "https://wa.me/917984789311",
     instagram: "https://instagram.com/sarthigo",
     facebook: "https://facebook.com/sarthigo",
     twitter: "https://x.com/sarthigo",

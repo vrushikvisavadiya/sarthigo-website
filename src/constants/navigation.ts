@@ -90,7 +90,7 @@ export const FOOTER_LINKS = {
 };
 
 export const SOCIAL_LINKS: SocialLink[] = [
-  { label: "WhatsApp", href: "https://wa.me/919999999999", icon: "whatsapp" },
+  { label: "WhatsApp", href: "https://wa.me/917984789311", icon: "whatsapp" },
   { label: "Instagram", href: "https://instagram.com", icon: "instagram" },
   { label: "Facebook", href: "https://facebook.com", icon: "facebook" },
 ];

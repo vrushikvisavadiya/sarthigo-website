@@ -6,7 +6,9 @@ export const siteConfig = {
   description:
     "Pre-book verified local taxis and multi-day tour packages in Somnath, Dwarka, Gir, Junagadh and across Gujarat's pilgrimage cities.",
   url: "https://sarthigo.com",
-  logo: "/logo/logo.png",
+
+  logo: "/logo/logo.png", // full logo (text + icon)
+  logoSingle: "/logo/logo-single.png", // ← icon only — use everywhere
   ogImage: "/og-image.png",
 
   // ── Contact ────────────────────────────────────

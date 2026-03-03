@@ -11,6 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { NAV_LINKS, siteConfig, whatsappBookingUrl } from "@/constants";
 import type { NavLink } from "@/constants";
+import Image from "next/image";
 
 // ── Dropdown ───────────────────────────────────
 function NavDropdown({ item }: { item: NavLink }) {
@@ -138,12 +139,7 @@ function MobileMenu({
                 onClick={onClose}
                 className="flex items-center gap-2"
               >
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground font-heading font-black text-sm">
-                  SG
-                </div>
-                <span className="font-heading font-bold text-foreground">
-                  {siteConfig.name}
-                </span>
+                <SarthigoLogo size={36} />
               </Link>
               <button
                 onClick={onClose}
@@ -275,17 +271,14 @@ export function Navbar() {
           <div className="flex h-16 items-center justify-between gap-4">
             {/* ── Logo ── */}
             <Link href="/" className="flex items-center gap-2.5 shrink-0">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary text-primary-foreground font-heading font-black text-sm shadow-sm">
-                SG
-              </div>
-              <div className="flex flex-col leading-none">
-                <span className="font-heading font-black text-foreground text-lg tracking-tight">
-                  {siteConfig.name}
-                </span>
-                <span className="text-[10px] text-muted-foreground leading-none">
-                  Somnath Taxi & Tours
-                </span>
-              </div>
+              <Image
+                src={siteConfig.logo}
+                alt={siteConfig.name}
+                width={160}
+                height={48}
+                className="h-10 w-auto object-contain"
+                priority // loads instantly, no layout shift
+              />
             </Link>
 
             {/* ── Desktop Nav ── */}
@@ -347,5 +340,19 @@ export function Navbar() {
       {/* Mobile Menu */}
       <MobileMenu isOpen={mobileOpen} onClose={() => setMobileOpen(false)} />
     </>
+  );
+}
+
+// ── Logo component — reuse anywhere ──
+export function SarthigoLogo({ size = 36 }: { size?: number }) {
+  return (
+    <Image
+      src={siteConfig.logoSingle}
+      alt={siteConfig.name}
+      width={size}
+      height={size}
+      className="rounded-xl object-contain"
+      priority
+    />
   );
 }

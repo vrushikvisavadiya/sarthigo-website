@@ -1,107 +1,71 @@
 import Link from "next/link";
-import { FaWhatsapp, FaInstagram, FaFacebookF } from "react-icons/fa6";
-import { Phone, Mail, MapPin, ArrowRight } from "lucide-react";
+import {
+  FaWhatsapp,
+  FaInstagram,
+  FaFacebookF,
+  FaYoutube,
+} from "react-icons/fa6";
+import { ArrowRight } from "lucide-react";
 import {
   siteConfig,
   whatsappBookingUrl,
   FOOTER_LINKS,
   CITIES,
 } from "@/constants";
-import Image from "next/image";
 import { Logo } from "@/components/shared/logo";
 
 export function Footer() {
   return (
-    <footer className="bg-primary text-white">
-      {/* ── Top CTA Strip ── */}
-      <div className="border-b border-white/10">
-        <div className="mx-auto max-w-7xl px-4 md:px-6 py-8">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="flex flex-col gap-1 text-center md:text-left">
-              <h3 className="font-heading font-bold text-xl text-white">
-                Ready to Book Your Somnath Taxi?
-              </h3>
-              <p className="text-white/60 text-sm">
-                Verified drivers · No prepayment · Instant WhatsApp confirmation
-              </p>
-            </div>
-            <div className="flex items-center gap-3 shrink-0">
-              <a
-                href={whatsappBookingUrl()}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-xl bg-green-500 hover:bg-green-600 px-5 py-2.5 text-sm font-semibold text-white transition-colors"
-              >
-                <FaWhatsapp className="h-4 w-4" />
-                Book on WhatsApp
-              </a>
-              <Link
-                href="/drivers/register"
-                className="inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 hover:bg-white/20 px-5 py-2.5 text-sm font-semibold text-white transition-colors"
-              >
-                Join as Driver
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* ── Main Footer Content ── */}
+    <footer className="bg-muted/30 border-t border-border">
+      {/* ── Main Grid ── */}
       <div className="mx-auto max-w-7xl px-4 md:px-6 py-14">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-10">
-          {/* ── Brand Column ── */}
-          <div className="col-span-2 md:col-span-3 lg:col-span-2 flex flex-col gap-5">
-            {/* Logo */}
-            <Link href="/" className="flex items-center gap-2.5 w-fit">
-              <Logo className="text-white [&_span]:text-white [&_.text-muted-foreground]:text-white/50" />
-            </Link>
+          {/* ── Brand — 2 cols ── */}
+          <div className="col-span-2 flex flex-col gap-5">
+            <Logo />
 
-            {/* Tagline */}
-            <p className="text-white/60 text-sm leading-relaxed max-w-xs">
-              {siteConfig.description}. Verified local drivers for Somnath,
-              Dwarka, Gir and all of Gujarat&apos;s pilgrimage circuit.
+            <p className="text-muted-foreground text-sm leading-relaxed max-w-xs">
+              Verified local taxis for Somnath, Dwarka, Gir and Gujarat&apos;s
+              pilgrimage circuit. No prepayment. No app needed.
             </p>
 
-            {/* Contact */}
-            <div className="flex flex-col gap-2.5">
+            {/* Contact Pills */}
+            <div className="flex flex-col gap-2">
               <a
                 href={`tel:${siteConfig.contact.phone}`}
-                className="flex items-center gap-2.5 text-sm text-white/70 hover:text-white transition-colors"
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors w-fit"
               >
-                <Phone className="h-4 w-4 text-secondary shrink-0" />
-                {siteConfig.contact.phoneDisplay}
+                📞 {siteConfig.contact.phoneDisplay}
               </a>
               <a
                 href={`mailto:${siteConfig.contact.email}`}
-                className="flex items-center gap-2.5 text-sm text-white/70 hover:text-white transition-colors"
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors w-fit"
               >
-                <Mail className="h-4 w-4 text-secondary shrink-0" />
-                {siteConfig.contact.email}
+                ✉️ {siteConfig.contact.email}
               </a>
-              <div className="flex items-center gap-2.5 text-sm text-white/70">
-                <MapPin className="h-4 w-4 text-secondary shrink-0" />
-                {siteConfig.contact.address}
-              </div>
+              <span className="text-sm text-muted-foreground">
+                📍 {siteConfig.contact.address}
+              </span>
             </div>
 
             {/* Social */}
             <div className="flex items-center gap-2">
               {[
                 {
-                  icon: <FaWhatsapp className="h-4 w-4" />,
+                  icon: <FaWhatsapp className="h-3.5 w-3.5" />,
                   href: siteConfig.social.whatsapp,
-                  bg: "bg-green-500 hover:bg-green-600",
                 },
                 {
-                  icon: <FaInstagram className="h-4 w-4" />,
+                  icon: <FaInstagram className="h-3.5 w-3.5" />,
                   href: siteConfig.social.instagram,
-                  bg: "bg-pink-500 hover:bg-pink-600",
                 },
                 {
-                  icon: <FaFacebookF className="h-4 w-4" />,
+                  icon: <FaFacebookF className="h-3.5 w-3.5" />,
                   href: siteConfig.social.facebook,
-                  bg: "bg-blue-600 hover:bg-blue-700",
+                },
+                {
+                  icon: <FaYoutube className="h-3.5 w-3.5" />,
+                  href: siteConfig.social.youtube,
                 },
               ].map((s, i) => (
                 <a
@@ -109,7 +73,7 @@ export function Footer() {
                   href={s.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`flex h-9 w-9 items-center justify-center rounded-xl text-white transition-colors ${s.bg}`}
+                  className="flex h-8 w-8 items-center justify-center rounded-lg border border-border bg-background text-muted-foreground hover:border-primary/30 hover:text-primary transition-all"
                 >
                   {s.icon}
                 </a>
@@ -119,15 +83,15 @@ export function Footer() {
 
           {/* ── Travellers ── */}
           <div className="flex flex-col gap-4">
-            <h4 className="text-sm font-semibold text-white uppercase tracking-wider">
+            <span className="text-xs font-semibold text-foreground uppercase tracking-widest">
               Travellers
-            </h4>
+            </span>
             <div className="flex flex-col gap-2.5">
               {FOOTER_LINKS.travellers.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="text-sm text-white/60 hover:text-white transition-colors"
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
                   {link.label}
                 </Link>
@@ -137,30 +101,30 @@ export function Footer() {
 
           {/* ── Drivers ── */}
           <div className="flex flex-col gap-4">
-            <h4 className="text-sm font-semibold text-white uppercase tracking-wider">
+            <span className="text-xs font-semibold text-foreground uppercase tracking-widest">
               Drivers
-            </h4>
+            </span>
             <div className="flex flex-col gap-2.5">
               {FOOTER_LINKS.drivers.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="text-sm text-white/60 hover:text-white transition-colors"
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
                   {link.label}
                 </Link>
               ))}
             </div>
 
-            <h4 className="text-sm font-semibold text-white uppercase tracking-wider mt-4">
+            <span className="text-xs font-semibold text-foreground uppercase tracking-widest mt-2">
               Company
-            </h4>
+            </span>
             <div className="flex flex-col gap-2.5">
               {FOOTER_LINKS.company.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="text-sm text-white/60 hover:text-white transition-colors"
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
                   {link.label}
                 </Link>
@@ -170,15 +134,15 @@ export function Footer() {
 
           {/* ── Cities ── */}
           <div className="flex flex-col gap-4">
-            <h4 className="text-sm font-semibold text-white uppercase tracking-wider">
+            <span className="text-xs font-semibold text-foreground uppercase tracking-widest">
               Cities
-            </h4>
+            </span>
             <div className="flex flex-col gap-2.5">
-              {FOOTER_LINKS.cities.map((link) => (
+              {FOOTER_LINKS.cities.slice(0, 1).map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="text-sm text-white/60 hover:text-white transition-colors"
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
                   {link.label}
                 </Link>
@@ -187,11 +151,11 @@ export function Footer() {
 
             {/* City Pills */}
             <div className="flex flex-wrap gap-1.5 mt-1">
-              {CITIES.slice(0, 4).map((city) => (
+              {CITIES.slice(0, 1).map((city) => (
                 <Link
                   key={city.slug}
                   href={city.href}
-                  className="inline-flex items-center gap-1 rounded-full border border-white/15 bg-white/5 px-2.5 py-1 text-xs text-white/60 hover:bg-white/15 hover:text-white transition-all"
+                  className="inline-flex items-center gap-1 rounded-full border border-border bg-background px-2.5 py-1 text-xs text-muted-foreground hover:border-primary/30 hover:text-primary transition-all"
                 >
                   {city.icon} {city.label}
                 </Link>
@@ -202,30 +166,43 @@ export function Footer() {
       </div>
 
       {/* ── Bottom Bar ── */}
-      <div className="border-t border-white/10">
-        <div className="mx-auto max-w-7xl px-4 md:px-6 py-5 flex flex-col md:flex-row items-center justify-between gap-3">
-          <p className="text-xs text-white/40 text-center md:text-left">
-            © {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
-            Made with 🛕 for pilgrims of India.
+      <div className="border-t border-border">
+        <div className="mx-auto max-w-7xl px-4 md:px-6 py-5 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-xs text-muted-foreground">
+            © {new Date().getFullYear()} {siteConfig.name} · Made with 🛕 for
+            pilgrims of India
           </p>
-          <div className="flex items-center gap-4 text-xs text-white/40">
+
+          {/* CTA — subtle */}
+          <a
+            href={whatsappBookingUrl()}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-4 py-2 text-xs font-medium text-muted-foreground hover:border-green-500/40 hover:text-green-600 transition-all"
+          >
+            <FaWhatsapp className="h-3.5 w-3.5 text-green-500" />
+            Book on WhatsApp
+            <ArrowRight className="h-3 w-3" />
+          </a>
+
+          <div className="flex items-center gap-4 text-xs text-muted-foreground">
             <Link
               href="/privacy"
-              className="hover:text-white/70 transition-colors"
+              className="hover:text-foreground transition-colors"
             >
-              Privacy Policy
+              Privacy
             </Link>
-            <span>·</span>
+            <span className="text-border">·</span>
             <Link
               href="/terms"
-              className="hover:text-white/70 transition-colors"
+              className="hover:text-foreground transition-colors"
             >
-              Terms of Service
+              Terms
             </Link>
-            <span>·</span>
+            <span className="text-border">·</span>
             <Link
               href="/sitemap.xml"
-              className="hover:text-white/70 transition-colors"
+              className="hover:text-foreground transition-colors"
             >
               Sitemap
             </Link>

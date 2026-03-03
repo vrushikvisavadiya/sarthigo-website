@@ -2,11 +2,11 @@ export type Testimonial = {
   id: string;
   name: string;
   location: string;
+  avatar: string; // initials
   rating: number;
-  review: string;
   trip: string;
-  avatar: string; // initials fallback
-  date: string;
+  review: string;
+  verified: boolean;
 };
 
 export const TESTIMONIALS: Testimonial[] = [
@@ -14,66 +14,66 @@ export const TESTIMONIALS: Testimonial[] = [
     id: "t1",
     name: "Ramesh Patel",
     location: "Ahmedabad, Gujarat",
-    rating: 5,
-    review:
-      "Excellent service! Our driver Mahesh bhai was very punctual and knowledgeable about all the temple timings. He even helped us get early darshan at Somnath. Highly recommended for families.",
-    trip: "Somnath Darshan Day Trip",
     avatar: "RP",
-    date: "Jan 2026",
+    rating: 5,
+    trip: "Somnath → Dwarka → Diu (3 Days)",
+    review:
+      "Driver Mukeshbhai was punctual, polite and knew every temple route perfectly. He waited patiently during darshan without any extra charge. Best decision of our yatra.",
+    verified: true,
   },
   {
     id: "t2",
     name: "Sunita Sharma",
     location: "Jaipur, Rajasthan",
-    rating: 5,
-    review:
-      "We booked the Somnath + Gir safari package. The driver was very professional and the car was clean AC. Gir safari was amazing. Booking through WhatsApp was super easy — no hassle at all.",
-    trip: "Somnath + Gir Safari Package",
     avatar: "SS",
-    date: "Feb 2026",
+    rating: 5,
+    trip: "Somnath Darshan (1 Day)",
+    review:
+      "Booked via WhatsApp at 10 PM and got confirmation in 3 minutes. Driver arrived 10 minutes early. Vehicle was clean, AC was working. Will book again for Dwarka trip.",
+    verified: true,
   },
   {
     id: "t3",
     name: "Vikram Mehta",
     location: "Surat, Gujarat",
-    rating: 5,
-    review:
-      "Did the Saurashtra circuit with my parents. 3 days, covered Somnath, Gir, Junagadh and Dwarka. Driver was like a local guide — knew every shortcut and good dhaba. Worth every rupee.",
-    trip: "Saurashtra Pilgrimage Circuit",
     avatar: "VM",
-    date: "Dec 2025",
+    rating: 5,
+    trip: "Gir Safari + Somnath (2 Days)",
+    review:
+      "Arranged a Gir safari entry + Somnath darshan package. Driver Hareshbhai handled everything smoothly. No haggling, no surprises — just a great trip.",
+    verified: true,
   },
   {
     id: "t4",
-    name: "Priya & Ankit Joshi",
-    location: "Mumbai, Maharashtra",
-    rating: 4,
-    review:
-      "Great experience for our first pilgrimage trip to Somnath. The Diu day trip was a bonus. Driver was friendly and patient with our kids. Will definitely book again for Dwarka next time.",
-    trip: "Somnath to Diu Day Trip",
+    name: "Priya Joshi",
+    location: "Pune, Maharashtra",
     avatar: "PJ",
-    date: "Jan 2026",
+    rating: 5,
+    trip: "Somnath → Junagadh (2 Days)",
+    review:
+      "Travelled as a family of 6 — got a spacious Innova. Driver helped elderly parents at every step. The pay-after-trip policy gave us complete peace of mind.",
+    verified: true,
   },
   {
     id: "t5",
-    name: "Haresh Desai",
-    location: "Vadodara, Gujarat",
+    name: "Arvind Shah",
+    location: "Mumbai, Maharashtra",
+    avatar: "AS",
     rating: 5,
+    trip: "Somnath Jyotirlinga Darshan",
     review:
-      "Very affordable and transparent pricing. No hidden charges at all — paid exactly what was quoted on WhatsApp. The driver waited patiently during our temple visits. 10/10 service.",
-    trip: "Somnath Darshan Day Trip",
-    avatar: "HD",
-    date: "Feb 2026",
+      "I was worried about finding a trustworthy cab at Veraval station late at night. Sarthigo connected me to a verified driver who was already waiting. Exceptional service.",
+    verified: true,
   },
   {
     id: "t6",
     name: "Kavita Nair",
-    location: "Pune, Maharashtra",
-    rating: 5,
-    review:
-      "I was nervous booking a local taxi but Sarthigo gave verified driver details beforehand. The driver called the evening before to confirm. Felt very safe as a solo woman traveller.",
-    trip: "Somnath + Gir Safari Package",
+    location: "Bangalore, Karnataka",
     avatar: "KN",
-    date: "Jan 2026",
+    rating: 5,
+    trip: "5-Day Gujarat Pilgrimage Circuit",
+    review:
+      "Covered Somnath, Dwarka, Nageshwar, Beyt Dwarka and Gir in 5 days. Sarthigo arranged everything perfectly. Driver was like a local guide — knew history of every place.",
+    verified: true,
   },
 ];

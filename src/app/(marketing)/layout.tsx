@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { FloatingWhatsApp } from "@/components/shared/floating-whatsapp";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
+import { LocalBusinessJsonLd } from "@/components/seo/json-ld";
 
 export const metadata: Metadata = {
   title: {
@@ -20,6 +21,7 @@ export default function MarketingLayout({
 }) {
   return (
     <div className="flex min-h-screen flex-col">
+      <LocalBusinessJsonLd />
       <Navbar />
       <main className="flex-1">{children}</main>
       <Footer />

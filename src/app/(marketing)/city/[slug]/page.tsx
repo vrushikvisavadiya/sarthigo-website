@@ -5,6 +5,7 @@ import { CityHero } from "@/sections/city/city-hero";
 import { CityAttractions } from "@/sections/city/city-attractions";
 import { CityPackages } from "@/sections/city/city-packages";
 import { CityFaq } from "@/sections/city/city-faq";
+import { BreadcrumbJsonLd, FaqJsonLd } from "@/components/seo/json-ld";
 
 // ── Pre-render all known city slugs at build time ──
 export async function generateStaticParams() {
@@ -51,6 +52,14 @@ export default async function CityPage({
 
   return (
     <>
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", href: "/" },
+          { name: "Cities", href: "/city/somnath" },
+          { name: city.name, href: `/city/${slug}` },
+        ]}
+      />
+      <FaqJsonLd faqs={city.faqs} />
       <CityHero city={city} />
       <CityAttractions city={city} />
       <CityPackages city={city} />

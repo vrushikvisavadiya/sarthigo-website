@@ -1,6 +1,7 @@
 export const siteConfig = {
   // ── Brand ──────────────────────────────────────
   name: "Sarthigo",
+  fullName: "Sarthigo — Somnath Taxi & Tour Packages",
   tagline: "Your Trusted Travel Partner",
   description:
     "Pre-book verified local taxis and multi-day tour packages in Somnath, Dwarka, Gir, Junagadh and across Gujarat's pilgrimage cities.",
@@ -31,12 +32,21 @@ export const siteConfig = {
   seo: {
     keywords: [
       "somnath taxi",
+      "somnath tour package",
+      "somnath cab booking",
+      "somnath to diu taxi",
+      "somnath to gir safari",
+      "somnath to dwarka taxi",
       "dwarka tour package",
       "gir safari cab",
       "gujarat pilgrimage cab",
       "junagadh taxi",
       "ambaji taxi booking",
       "kutch tour package",
+      "pilgrimage taxi gujarat",
+      "jyotirlinga tour package",
+      "saurashtra taxi booking",
+      "veraval taxi",
       "sarthigo",
     ],
     twitterHandle: "@sarthigo",
@@ -50,7 +60,7 @@ export const siteConfig = {
   },
 } as const;
 
-// ── Derived helpers (use anywhere) ──────────────
+// ── Helpers ─────────────────────────────────────
 export const whatsappBookingUrl = (message?: string) =>
   `https://wa.me/${siteConfig.contact.whatsapp}?text=${encodeURIComponent(
     message ?? siteConfig.contact.whatsappMessage,

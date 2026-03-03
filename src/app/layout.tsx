@@ -1,7 +1,8 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans, Inter } from "next/font/google";
 import "./globals.css";
 import { MotionProvider } from "@/components/providers/motion-provider";
+import { siteConfig } from "@/constants";
 
 const fontHeading = Plus_Jakarta_Sans({
   variable: "--font-heading",
@@ -17,19 +18,78 @@ const fontBase = Inter({
   display: "swap",
 });
 
+export const viewport: Viewport = {
+  themeColor: "#1B3A6B",
+  width: "device-width",
+  initialScale: 1,
+};
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteConfig.url),
+
   title: {
-    default: "Sarthigo – Taxi & Tour Booking for Pilgrimage Cities",
-    template: "%s | Sarthigo",
+    default: siteConfig.fullName,
+    template: `%s | ${siteConfig.name}`,
   },
-  description:
-    "Pre-book verified local taxis and multi-day tour packages in Somnath, Dwarka, Gir, Junagadh and across Gujarat's pilgrimage cities.",
-  icons: {
-    icon: "/favicon.ico", // put a 32x32 version here
-    apple: "/apple-touch-icon.png", // 180x180 version
-  },
+
+  description: siteConfig.description,
+  keywords: siteConfig.seo.keywords.join(", "),
+
+  authors: [{ name: siteConfig.name, url: siteConfig.url }],
+  creator: siteConfig.name,
+  publisher: siteConfig.name,
+
   openGraph: {
-    images: ["/og-image.png"], // 1200x630 banner for WhatsApp/social sharing
+    type: "website",
+    locale: "en_IN",
+    url: siteConfig.url,
+    siteName: siteConfig.name,
+    title: siteConfig.fullName,
+    description: siteConfig.description,
+    images: [
+      {
+        url: siteConfig.ogImage,
+        width: 1200,
+        height: 630,
+        alt: `${siteConfig.name} — Somnath Taxi & Tours`,
+      },
+    ],
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: siteConfig.fullName,
+    description: siteConfig.description,
+    images: [siteConfig.ogImage],
+    creator: siteConfig.seo.twitterHandle,
+  },
+
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon-16.png", sizes: "16x16", type: "image/png" },
+      { url: "/icon-32.png", sizes: "32x32", type: "image/png" },
+    ],
+    apple: "/apple-touch-icon.png",
+    shortcut: "/favicon.ico",
+  },
+
+  manifest: "/manifest.json",
+
+  alternates: {
+    canonical: siteConfig.url,
   },
 };
 

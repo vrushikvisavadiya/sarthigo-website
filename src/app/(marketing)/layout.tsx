@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import { Navbar } from "@/components/Navbar";
-import { Footer } from "@/components/Footer";
+
 import { FloatingWhatsApp } from "@/components/shared/floating-whatsapp";
+import { Navbar } from "@/components/layout/navbar";
+import { Footer } from "@/components/layout/footer";
 
 export const metadata: Metadata = {
   title: {

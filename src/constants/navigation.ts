@@ -1,127 +1,96 @@
-import { siteConfig } from "./site";
+import type { LucideIcon } from "lucide-react";
 
-// ── Types ──────────────────────────────────────
 export type NavLink = {
   label: string;
   href: string;
+  icon?: string;
+  children?: NavLink[];
 };
 
-export type CityLink = NavLink & {
-  icon: string;
+export type CityLink = {
   slug: string;
-  description: string;
+  label: string;
+  href: string;
+  icon: string;
 };
 
-export type SocialLink = NavLink & {
-  iconName: string; // matches react-icons key
+export type SocialLink = {
+  label: string;
+  href: string;
+  icon: string;
 };
 
-// ── Navbar Links ───────────────────────────────
 export const NAV_LINKS: NavLink[] = [
-  { label: "Home", href: "/" },
-  { label: "Packages", href: "/packages" },
-  { label: "Drivers", href: "/drivers" },
-  { label: "About", href: "/about" },
-  { label: "Contact", href: "/contact" },
-];
-
-// ── Cities ─────────────────────────────────────
-export const CITIES: CityLink[] = [
+  {
+    label: "Home",
+    href: "/",
+  },
   {
     label: "Somnath",
-    slug: "somnath",
     href: "/city/somnath",
-    icon: "🛕",
-    description: "Jyotirlinga temple & coastal tours",
   },
   {
-    label: "Dwarka",
-    slug: "dwarka",
-    href: "/city/dwarka",
-    icon: "🐚",
-    description: "Dwarkadhish temple & Beyt Dwarka",
+    label: "Packages",
+    href: "/packages",
   },
   {
-    label: "Gir",
-    slug: "gir",
-    href: "/city/gir",
-    icon: "🦁",
-    description: "Asiatic lion safari packages",
+    label: "For Drivers",
+    href: "/drivers/plans",
+    children: [
+      { label: "View Plans", href: "/drivers/plans" },
+      { label: "Register as Driver", href: "/drivers/register" },
+    ],
   },
   {
-    label: "Junagadh",
-    slug: "junagadh",
-    href: "/city/junagadh",
-    icon: "🏰",
-    description: "Uparkot fort & Girnar trek",
+    label: "About",
+    href: "/about",
   },
   {
-    label: "Ambaji",
-    slug: "ambaji",
-    href: "/city/ambaji",
-    icon: "⛰️",
-    description: "Shakti peetha pilgrimage",
-  },
-  {
-    label: "Kutch",
-    slug: "kutch",
-    href: "/city/kutch",
-    icon: "🏜️",
-    description: "Rann Utsav & white desert tours",
+    label: "Contact",
+    href: "/contact",
   },
 ];
 
-// ── Social Links ───────────────────────────────
-export const SOCIAL_LINKS: SocialLink[] = [
-  {
-    label: "WhatsApp",
-    href: siteConfig.social.whatsapp,
-    iconName: "FaWhatsapp",
-  },
-  {
-    label: "Instagram",
-    href: siteConfig.social.instagram,
-    iconName: "FaInstagram",
-  },
-  {
-    label: "Facebook",
-    href: siteConfig.social.facebook,
-    iconName: "FaFacebookF",
-  },
-  {
-    label: "X / Twitter",
-    href: siteConfig.social.twitter,
-    iconName: "FaXTwitter",
-  },
-  {
-    label: "YouTube",
-    href: siteConfig.social.youtube,
-    iconName: "FaYoutube",
-  },
+export const CITIES: CityLink[] = [
+  { slug: "somnath", label: "Somnath", href: "/city/somnath", icon: "🛕" },
+  { slug: "dwarka", label: "Dwarka", href: "/city/dwarka", icon: "🐚" },
+  { slug: "gir", label: "Gir", href: "/city/gir", icon: "🦁" },
+  { slug: "junagadh", label: "Junagadh", href: "/city/junagadh", icon: "🏰" },
+  { slug: "diu", label: "Diu", href: "/city/diu", icon: "🏖️" },
+  { slug: "ambaji", label: "Ambaji", href: "/city/ambaji", icon: "🙏" },
+  { slug: "kutch", label: "Kutch", href: "/city/kutch", icon: "🌅" },
 ];
 
-// ── Footer Links ───────────────────────────────
 export const FOOTER_LINKS = {
-  company: [
-    { label: "About Us", href: "/about" },
-    { label: "How It Works", href: "/how-it-works" },
-    { label: "Packages", href: "/packages" },
-    { label: "Drivers", href: "/drivers" },
-    { label: "Contact", href: "/contact" },
-  ] satisfies NavLink[],
-
-  cities: CITIES.map(({ label, href }) => ({ label, href })),
-
+  travellers: [
+    { label: "Somnath Taxi", href: "/city/somnath" },
+    { label: "All Packages", href: "/packages" },
+    { label: "How It Works", href: "/#how-it-works" },
+    { label: "Testimonials", href: "/#testimonials" },
+  ],
   drivers: [
     { label: "Register as Driver", href: "/drivers/register" },
-    { label: "Driver Dashboard", href: "/dashboard" },
-    { label: "Subscription Plans", href: "/drivers/plans" },
+    { label: "View Plans", href: "/drivers/plans" },
     { label: "Driver Guidelines", href: "/drivers/guidelines" },
-  ] satisfies NavLink[],
-
-  legal: [
+  ],
+  company: [
+    { label: "About Us", href: "/about" },
+    { label: "Contact", href: "/contact" },
     { label: "Privacy Policy", href: "/privacy" },
     { label: "Terms of Service", href: "/terms" },
-    { label: "Refund Policy", href: "/refund" },
-  ] satisfies NavLink[],
+  ],
+  cities: [
+    { label: "Somnath", href: "/city/somnath" },
+    { label: "Dwarka", href: "/city/dwarka" },
+    { label: "Gir", href: "/city/gir" },
+    { label: "Junagadh", href: "/city/junagadh" },
+    { label: "Diu", href: "/city/diu" },
+    { label: "Ambaji", href: "/city/ambaji" },
+  ],
 };
+
+export const SOCIAL_LINKS: SocialLink[] = [
+  { label: "WhatsApp", href: "https://wa.me/919999999999", icon: "whatsapp" },
+  { label: "Instagram", href: "https://instagram.com", icon: "instagram" },
+  { label: "Facebook", href: "https://facebook.com", icon: "facebook" },
+];

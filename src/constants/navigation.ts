@@ -67,6 +67,7 @@ export const FOOTER_LINKS = {
     { label: "All Packages", href: "/packages" },
     { label: "How It Works", href: "/#how-it-works" },
     { label: "Testimonials", href: "/#testimonials" },
+    { label: "FAQ", href: "/faq" },
   ],
   drivers: [
     { label: "Register as Driver", href: "/drivers/register" },

@@ -9,3 +9,6 @@ export type { Plan } from "./plans";
 
 export { TESTIMONIALS } from "./testimonials";
 export type { Testimonial } from "./testimonials";
+
+export { FAQ_CATEGORIES } from "./faq";
+export type { FaqCategory } from "./faq";

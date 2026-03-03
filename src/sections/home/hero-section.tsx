@@ -7,6 +7,8 @@ import { FaWhatsapp } from "react-icons/fa6";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { CITIES, whatsappBookingUrl } from "@/constants";
+import Image from "next/image";
+import { IMAGES } from "@/constants/images";
 
 export function HeroSection() {
   return (
@@ -141,9 +143,41 @@ export function HeroSection() {
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.25 }}
-              className="hidden lg:flex justify-end"
+              className="hidden lg:flex justify-end relative"
             >
-              <BookingCard />
+              {/* Temple Image */}
+              <div className="relative w-full max-w-lg">
+                <div className="relative h-[520px] w-full rounded-3xl overflow-hidden shadow-2xl">
+                  <Image
+                    src={IMAGES.hero.somnathTemple}
+                    alt="Somnath Jyotirlinga Temple"
+                    fill
+                    className="object-cover"
+                    priority
+                    sizes="(max-width: 1280px) 50vw, 560px"
+                  />
+                  {/* Dark overlay at bottom */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+                </div>
+
+                {/* Floating Booking Card — over image */}
+                {/* <div className="absolute bottom-6 left-6 right-6">
+                  <BookingCard />
+                </div> */}
+
+                {/* Floating Trust Badge */}
+                <div className="absolute top-5 right-5 rounded-xl border border-white/20 bg-white/10 backdrop-blur-md px-4 py-3 flex items-center gap-2 shadow-lg">
+                  <span className="text-2xl">🛕</span>
+                  <div className="flex flex-col">
+                    <span className="text-xs font-bold text-white">
+                      Somnath Temple
+                    </span>
+                    <span className="text-xs text-white/60">
+                      First Jyotirlinga
+                    </span>
+                  </div>
+                </div>
+              </div>
             </m.div>
           </div>
         </div>

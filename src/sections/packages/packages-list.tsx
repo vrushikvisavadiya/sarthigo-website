@@ -46,12 +46,12 @@ function PackageCard({ pkg, index }: { pkg: Package; index: number }) {
       transition={{ duration: 0.4, delay: index * 0.08 }}
     >
       <Card
-        className={`group flex flex-col h-full border-border hover:border-primary/40 hover:shadow-xl transition-all duration-300 overflow-hidden
+        className={`py-0  group flex flex-col h-full border-border hover:border-primary/40 hover:shadow-xl transition-all duration-300 overflow-hidden
           ${pkg.popular ? "ring-2 ring-secondary ring-offset-2" : ""}
         `}
       >
         {/* Image */}
-        <div className="relative h-52 w-full overflow-hidden">
+        <div className="relative h-60 w-full overflow-hidden">
           <Image
             src={image}
             alt={pkg.title}

@@ -26,8 +26,7 @@ export const IMAGES = {
 
   // ── Packages ──────────────────────────────────
   packages: {
-    somnathDarshan:
-      "https://images.unsplash.com/photo-1621999916460-5a3ad1228b84?w=600&q=80",
+    somnathDarshan: "/city/somnath/Somanath_mandir.jpg",
     girSafari:
       "https://images.unsplash.com/photo-1561731216-c3a4d99437d5?w=600&q=80",
     diuBeach:
@@ -38,8 +37,7 @@ export const IMAGES = {
 
   // ── Attractions ───────────────────────────────
   attractions: {
-    somnathTemple:
-      "https://images.unsplash.com/photo-1621999916460-5a3ad1228b84?w=600&q=80",
+    somnathTemple: "/city/somnath/Somanath_mandir.jpg",
     bhalkaTemple:
       "https://images.unsplash.com/photo-1567051113-ad4e9e249e4d?w=600&q=80",
     triveniSangam:

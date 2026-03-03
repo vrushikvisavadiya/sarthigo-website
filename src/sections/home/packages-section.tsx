@@ -89,8 +89,8 @@ function PackageCard({ pkg }: { pkg: Package }) {
   return (
     <Card
       className={`
-        relative flex flex-col w-full border-border hover:border-primary/40
-        hover:shadow-xl transition-all duration-300
+       relative flex flex-col w-full border-border hover:border-primary/40
+        hover:shadow-xl transition-all duration-300 
         ${pkg.popular ? "ring-2 ring-secondary ring-offset-2" : ""}
       `}
     >

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { m, useInView, AnimatePresence } from "motion/react";
 import {
   Star,
@@ -89,17 +89,17 @@ function TestimonialCard({
 }
 
 // ── Mobile Carousel ────────────────────────────
-function MobileCarousel() {
+function MobileCarousel({ testimonials }: { testimonials: Testimonial[] }) {
   const [index, setIndex] = useState(0);
   const [dir, setDir] = useState(1);
 
   const prev = () => {
     setDir(-1);
-    setIndex((i) => (i === 0 ? TESTIMONIALS.length - 1 : i - 1));
+    setIndex((i) => (i === 0 ? testimonials.length - 1 : i - 1));
   };
   const next = () => {
     setDir(1);
-    setIndex((i) => (i === TESTIMONIALS.length - 1 ? 0 : i + 1));
+    setIndex((i) => (i === testimonials.length - 1 ? 0 : i + 1));
   };
 
   return (
@@ -114,7 +114,7 @@ function MobileCarousel() {
             exit={{ opacity: 0, x: dir * -40 }}
             transition={{ duration: 0.3 }}
           >
-            <TestimonialCard t={TESTIMONIALS[index]} featured />
+            <TestimonialCard t={testimonials[index]} featured />
           </m.div>
         </AnimatePresence>
       </div>
@@ -142,7 +142,7 @@ function MobileCarousel() {
 
         {/* Dots */}
         <div className="flex items-center gap-1.5">
-          {TESTIMONIALS.map((_, i) => (
+          {testimonials.map((_, i) => (
             <button
               key={i}
               onClick={() => {
@@ -160,7 +160,7 @@ function MobileCarousel() {
         </div>
 
         <span className="text-xs text-muted-foreground tabular-nums">
-          {index + 1} / {TESTIMONIALS.length}
+          {index + 1} / {testimonials.length}
         </span>
       </div>
     </div>
@@ -171,6 +171,28 @@ function MobileCarousel() {
 export function TestimonialsSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const [testimonials, setTestimonials] = useState<Testimonial[]>(TESTIMONIALS);
+
+  useEffect(() => {
+    fetch("/api/testimonials")
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.data && json.data.length > 0) {
+          const formatted = json.data.map((t: any) => ({
+             id: t.id,
+             name: t.name,
+             avatar: t.name.charAt(0).toUpperCase(),
+             rating: t.rating,
+             trip: t.trip_info,
+             review: t.review,
+             location: "Verified User",
+             verified: t.verified,
+          }));
+          setTestimonials(formatted);
+        }
+      })
+      .catch((err) => console.error("Failed to fetch testimonials", err));
+  }, []);
 
   return (
     <section
@@ -221,12 +243,12 @@ export function TestimonialsSection() {
 
         {/* Mobile — Carousel */}
         <div className="md:hidden">
-          <MobileCarousel />
+          <MobileCarousel testimonials={testimonials} />
         </div>
 
         {/* Desktop — Masonry-style Grid */}
         <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {TESTIMONIALS.map((t, i) => (
+          {testimonials.map((t, i) => (
             <m.div
               key={t.id}
               initial={{ opacity: 0, y: 30 }}

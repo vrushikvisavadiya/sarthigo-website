@@ -149,11 +149,30 @@ export function RegisterForm() {
 
   const onSubmit = async (data: DriverRegisterFormData) => {
     setIsSubmitting(true);
-    // Simulate API call — replace with real API later
-    await new Promise((r) => setTimeout(r, 1500));
-    setIsSubmitting(false);
-    setIsSuccess(true);
-    toast.success("Registration submitted! We'll contact you within 24 hours.");
+    try {
+      const res = await fetch("/api/drivers", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: data.fullName,
+          phone: data.phone,
+          email: data.email ?? "",
+          city: data.city,
+          vehicle_type: data.vehicleType,
+          vehicle_number: data.vehicleNumber,
+          bio: `Experience: ${data.experience}. Vehicle: ${data.vehicleModel}`,
+          languages: [],
+        }),
+      });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error ?? "Registration failed");
+      setIsSuccess(true);
+      toast.success(json.message ?? "Registration submitted! We'll contact you within 24 hours.");
+    } catch (err: unknown) {
+      toast.error(err instanceof Error ? err.message : "Something went wrong. Please WhatsApp us instead.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   // ── Success Screen ──

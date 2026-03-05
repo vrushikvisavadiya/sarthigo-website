@@ -87,10 +87,20 @@ function ContactForm() {
   });
 
   const onSubmit = async (data: ContactFormData) => {
-    await new Promise((r) => setTimeout(r, 1200));
-    setIsSuccess(true);
-    reset();
-    toast.success("Message sent! We'll get back to you shortly.");
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error ?? "Failed to send message");
+      setIsSuccess(true);
+      reset();
+      toast.success(json.message ?? "Message sent! We'll get back to you shortly.");
+    } catch (err: unknown) {
+      toast.error(err instanceof Error ? err.message : "Something went wrong. Please try WhatsApp instead.");
+    }
   };
 
   if (isSuccess) {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { m, AnimatePresence, useInView } from "motion/react";
 import { ChevronDown, Search, MessageCircle } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa6";
@@ -112,18 +112,40 @@ function FaqCategory({
 export function FaqPageContent() {
   const [search, setSearch] = useState("");
   const [activeTab, setActiveTab] = useState("all");
+  const [categories, setCategories] = useState<FaqCategory[]>(FAQ_CATEGORIES);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
 
+  useEffect(() => {
+    fetch("/api/faq")
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.data && json.data.length > 0) {
+          const fetched = json.data as { category: string; question: string; answer: string; is_active: boolean }[];
+          const mapped = FAQ_CATEGORIES.map((cat) => ({
+            ...cat,
+            questions: fetched
+              .filter((f) => f.category === cat.id && f.is_active)
+              .map((f) => ({ question: f.question, answer: f.answer })),
+          })).filter((cat) => cat.questions.length > 0);
+
+          if (mapped.length > 0) {
+            setCategories(mapped);
+          }
+        }
+      })
+      .catch((err) => console.error("Failed to load FAQs", err));
+  }, []);
+
   const tabs = [
     { id: "all", label: "All", icon: "✦" },
-    ...FAQ_CATEGORIES.map((c) => ({ id: c.id, label: c.label, icon: c.icon })),
+    ...categories.map((c) => ({ id: c.id, label: c.label, icon: c.icon })),
   ];
 
   const visibleCategories =
     activeTab === "all"
-      ? FAQ_CATEGORIES
-      : FAQ_CATEGORIES.filter((c) => c.id === activeTab);
+      ? categories
+      : categories.filter((c) => c.id === activeTab);
 
   const totalResults = visibleCategories.reduce((acc, cat) => {
     const filtered = search.trim()

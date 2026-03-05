@@ -3,32 +3,7 @@
 import Link from "next/link";
 import { m } from "motion/react";
 import { ShieldCheck, Star, ChevronDown } from "lucide-react";
-import { FaWhatsapp } from "react-icons/fa6";
-import { Button } from "@/components/ui/button";
-import { CITIES, whatsappBookingUrl } from "@/constants";
-
-const TRUST_POINTS = [
-  {
-    icon: "🪪",
-    title: "License Verified",
-    desc: "Every driver's license, RC and insurance is manually checked before onboarding.",
-  },
-  {
-    icon: "💬",
-    title: "Direct WhatsApp",
-    desc: "You talk directly to your driver — no middleman, no call center.",
-  },
-  {
-    icon: "💵",
-    title: "Pay After Trip",
-    desc: "Zero advance payment. Pay cash to your driver after the trip ends.",
-  },
-  {
-    icon: "📍",
-    title: "Local Experts",
-    desc: "Drivers who live in Somnath — they know every temple, route and shortcut.",
-  },
-];
+import { BookingSearchForm } from "@/sections/home/booking-search-form";
 
 export function HeroSection() {
   return (
@@ -37,7 +12,7 @@ export function HeroSection() {
       <div className="h-1 w-full bg-gradient-to-r from-primary via-secondary to-primary" />
 
       <div className="mx-auto max-w-7xl px-4 md:px-6">
-        <div className="flex flex-col items-center text-center py-20 md:py-28 gap-10">
+        <div className="flex flex-col items-center text-center py-14 md:py-20 gap-8">
           {/* ── Eyebrow ── */}
           <m.div
             initial={{ opacity: 0, y: 12 }}
@@ -54,7 +29,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="flex flex-col gap-5 max-w-3xl"
+            className="flex flex-col gap-4 max-w-3xl"
           >
             <h1 className="text-4xl md:text-6xl font-heading font-black text-foreground leading-[1.1] tracking-tight">
               The Taxi You Can
@@ -62,48 +37,26 @@ export function HeroSection() {
               <span className="text-primary">Actually Trust</span> in Somnath
             </h1>
             <p className="text-muted-foreground text-base md:text-xl leading-relaxed max-w-2xl mx-auto">
-              Verified local drivers for Somnath pilgrimage tours. No app. No
-              prepayment. Book on WhatsApp in 2 minutes.
+              Pick your city, choose your vehicle, select your trip — and we&apos;ll
+              connect you with a verified local driver instantly.
             </p>
           </m.div>
 
-          {/* ── CTAs ── */}
+          {/* ── Booking Search Form ── */}
           <m.div
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.2 }}
-            className="flex flex-col sm:flex-row items-center gap-3"
+            transition={{ duration: 0.5, delay: 0.25 }}
+            className="w-full max-w-3xl"
           >
-            <Button
-              asChild
-              size="lg"
-              className="rounded-xl gap-2 font-bold h-13 px-8 text-base bg-green-500 hover:bg-green-600 text-white shadow-lg shadow-green-500/25"
-            >
-              <a
-                href={whatsappBookingUrl()}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <FaWhatsapp className="h-5 w-5" />
-                Book Now — It&apos;s Free
-              </a>
-            </Button>
-
-            <Button
-              asChild
-              size="lg"
-              variant="outline"
-              className="rounded-xl gap-2 font-semibold h-13 px-8 text-base"
-            >
-              <Link href="/packages">View Tour Packages</Link>
-            </Button>
+            <BookingSearchForm />
           </m.div>
 
           {/* ── Social Proof Row ── */}
           <m.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
+            transition={{ delay: 0.5 }}
             className="flex flex-wrap items-center justify-center gap-6 text-sm"
           >
             {/* Avatars + rating */}
@@ -154,50 +107,6 @@ export function HeroSection() {
               <span className="text-base">⚡</span>
               <span>Reply in &lt; 5 minutes</span>
             </div>
-          </m.div>
-
-          {/* ── Trust Cards ── */}
-          <m.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.45 }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-3 w-full max-w-4xl hidden"
-          >
-            {TRUST_POINTS.map((point, i) => (
-              <m.div
-                key={i}
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.5 + i * 0.07 }}
-                className="flex flex-col gap-2.5 rounded-2xl border border-border bg-muted/30 p-4 text-left hover:border-primary/20 hover:bg-muted/50 transition-all"
-              >
-                <span className="text-2xl">{point.icon}</span>
-                <div className="flex flex-col gap-1">
-                  <span className="text-sm font-semibold text-foreground">
-                    {point.title}
-                  </span>
-                  <span className="text-xs text-muted-foreground leading-snug">
-                    {point.desc}
-                  </span>
-                </div>
-              </m.div>
-            ))}
-          </m.div>
-
-          {/* ── City Pills ── */}
-          <m.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.7 }}
-            className="flex flex-wrap justify-center gap-2 hidden"
-          >
-            {CITIES.map((city) => (
-              <Link key={city.slug} href={city.href}>
-                <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-background px-3 py-1.5 text-xs text-muted-foreground hover:border-primary/30 hover:text-primary transition-all">
-                  {city.icon} {city.label}
-                </span>
-              </Link>
-            ))}
           </m.div>
         </div>
       </div>

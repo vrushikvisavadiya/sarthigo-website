@@ -59,10 +59,10 @@ export function HeroSection() {
             <h1 className="text-4xl md:text-6xl font-heading font-black text-foreground leading-[1.1] tracking-tight">
               The Taxi You Can
               <br />
-              <span className="text-primary">Actually Trust</span> in Somnath
+              <span className="text-primary">Actually Trust</span>
             </h1>
             <p className="text-muted-foreground text-base md:text-xl leading-relaxed max-w-2xl mx-auto">
-              Verified local drivers for Somnath pilgrimage tours. No app. No
+              Verified local drivers for pilgrimage tours. No app. No
               prepayment. Book on WhatsApp in 2 minutes.
             </p>
           </m.div>

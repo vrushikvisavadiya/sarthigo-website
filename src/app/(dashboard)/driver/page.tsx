@@ -163,7 +163,7 @@ export default function DriverOverviewPage() {
           </div>
           {/* Edit Button */}
           <a
-            href="/dashboard/driver/profile"
+            href="/driver/profile"
             className="hidden sm:flex items-center gap-2 text-sm text-primary border border-primary/30 hover:bg-primary/10 px-3 py-1.5 rounded-lg transition-colors"
           >
             Edit Profile
@@ -201,7 +201,7 @@ export default function DriverOverviewPage() {
           <div className="flex items-center justify-between px-5 py-4 border-b border-border">
             <h2 className="font-semibold text-foreground">Recent Trips</h2>
             <a
-              href="/dashboard/driver/trips"
+              href="/driver/trips"
               className="text-xs text-primary hover:underline"
             >
               View all →
@@ -242,7 +242,7 @@ export default function DriverOverviewPage() {
           <div className="flex items-center justify-between px-5 py-4 border-b border-border">
             <h2 className="font-semibold text-foreground">Documents</h2>
             <a
-              href="/dashboard/driver/documents"
+              href="/driver/documents"
               className="text-xs text-primary hover:underline"
             >
               Manage →

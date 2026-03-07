@@ -1,41 +1,47 @@
 "use client";
 
+import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Menu } from "lucide-react";
+import { Menu, PanelLeftClose, PanelLeftOpen } from "lucide-react";
+import { siteConfig } from "@/constants/site";
 
 // ─── Nav Labels ───────────────────────────────────────────────
 const ADMIN_NAV = [
-  { label: "Overview", href: "/dashboard/admin" },
-  { label: "Drivers", href: "/dashboard/admin/drivers" },
-  { label: "Trips", href: "/dashboard/admin/trips" },
-  { label: "Analytics", href: "/dashboard/admin/analytics" },
-  { label: "Settings", href: "/dashboard/admin/settings" },
+  { label: "Overview", href: "/admin" },
+  { label: "Drivers", href: "/admin/drivers" },
+  { label: "Trips", href: "/admin/trips" },
+  { label: "Analytics", href: "/admin/analytics" },
+  { label: "Settings", href: "/admin/settings" },
 ];
 
 const DRIVER_NAV = [
-  { label: "Overview", href: "/dashboard/driver" },
-  { label: "My Trips", href: "/dashboard/driver/trips" },
-  { label: "Profile", href: "/dashboard/driver/profile" },
-  { label: "Documents", href: "/dashboard/driver/documents" },
+  { label: "Overview", href: "/driver" },
+  { label: "My Trips", href: "/driver/trips" },
+  { label: "Profile", href: "/driver/profile" },
+  { label: "Documents", href: "/driver/documents" },
 ];
 
 interface TopbarProps {
   role?: "admin" | "driver";
   userName?: string;
   onMenuClick: () => void;
+  onCollapseClick: () => void;
+  collapsed: boolean;
 }
 
 export function DashboardTopbar({
   role = "driver",
   userName = "User",
   onMenuClick,
+  onCollapseClick,
+  collapsed,
 }: TopbarProps) {
   const pathname = usePathname();
   const navItems = role === "admin" ? ADMIN_NAV : DRIVER_NAV;
 
   const pageTitle =
     navItems.find((n) =>
-      n.href === "/dashboard/admin" || n.href === "/dashboard/driver"
+      n.href === "/admin" || n.href === "/driver"
         ? pathname === n.href
         : pathname.startsWith(n.href),
     )?.label ?? "Dashboard";
@@ -44,7 +50,7 @@ export function DashboardTopbar({
     <header className="sticky top-0 z-30 h-16 border-b border-border bg-background/80 backdrop-blur-sm flex items-center justify-between px-4 md:px-6 flex-shrink-0">
       {/* Left */}
       <div className="flex items-center gap-3">
-        {/* Hamburger — mobile only */}
+        {/* Mobile Hamburger */}
         <button
           onClick={onMenuClick}
           className="md:hidden p-2 rounded-lg hover:bg-muted text-muted-foreground transition-colors"
@@ -53,10 +59,31 @@ export function DashboardTopbar({
           <Menu className="w-5 h-5" />
         </button>
 
+        {/* Desktop Collapse Toggle */}
+        <button
+          onClick={onCollapseClick}
+          className="hidden md:flex p-2 rounded-lg hover:bg-muted text-muted-foreground transition-colors"
+          aria-label="Toggle sidebar"
+        >
+          {collapsed ? (
+            <PanelLeftOpen className="w-5 h-5" />
+          ) : (
+            <PanelLeftClose className="w-5 h-5" />
+          )}
+        </button>
+
         {/* Mobile Logo */}
-        <span className="md:hidden text-lg font-bold text-primary">
-          Sarthigo
-        </span>
+        <div className="md:hidden flex items-center gap-2">
+          <Image
+            src={siteConfig.logoSingle}
+            alt={siteConfig.name}
+            width={24}
+            height={24}
+          />
+          <span className="text-lg font-bold text-primary">
+            {siteConfig.name}
+          </span>
+        </div>
 
         {/* Page Title — desktop */}
         <span className="hidden md:block text-sm font-medium text-muted-foreground">

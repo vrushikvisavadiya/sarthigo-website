@@ -187,7 +187,7 @@ export default function AdminOverviewPage() {
           <div className="flex items-center justify-between px-5 py-4 border-b border-border">
             <h2 className="font-semibold text-foreground">Recent Drivers</h2>
             <a
-              href="/dashboard/admin/drivers"
+              href="/admin/drivers"
               className="text-xs text-primary hover:underline"
             >
               View all →
@@ -228,7 +228,7 @@ export default function AdminOverviewPage() {
           <div className="flex items-center justify-between px-5 py-4 border-b border-border">
             <h2 className="font-semibold text-foreground">Recent Trips</h2>
             <a
-              href="/dashboard/admin/trips"
+              href="/admin/trips"
               className="text-xs text-primary hover:underline"
             >
               View all →

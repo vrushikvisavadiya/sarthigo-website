@@ -1,67 +1,33 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { siteConfig } from "@/constants/site";
 
 // ─── Nav Constants ────────────────────────────────────────────
 const ADMIN_NAV = [
-  {
-    label: "Overview",
-    href: "/admin",
-    icon: <HomeIcon />,
-  },
-  {
-    label: "Drivers",
-    href: "/admin/drivers",
-    icon: <DriversIcon />,
-  },
-  {
-    label: "Trips",
-    href: "/admin/trips",
-    icon: <TripsIcon />,
-  },
-  {
-    label: "Analytics",
-    href: "/admin/analytics",
-    icon: <AnalyticsIcon />,
-  },
-  {
-    label: "Settings",
-    href: "/admin/settings",
-    icon: <SettingsIcon />,
-  },
+  { label: "Overview", href: "/admin", icon: <HomeIcon /> },
+  { label: "Drivers", href: "/admin/drivers", icon: <DriversIcon /> },
+  { label: "Trips", href: "/admin/trips", icon: <TripsIcon /> },
+  { label: "Analytics", href: "/admin/analytics", icon: <AnalyticsIcon /> },
+  { label: "Settings", href: "/admin/settings", icon: <SettingsIcon /> },
 ];
 
 const DRIVER_NAV = [
-  {
-    label: "Overview",
-    href: "/driver",
-    icon: <HomeIcon />,
-  },
-  {
-    label: "My Trips",
-    href: "/driver/trips",
-    icon: <TripsIcon />,
-  },
-  {
-    label: "Profile",
-    href: "/driver/profile",
-    icon: <ProfileIcon />,
-  },
-  {
-    label: "Documents",
-    href: "/driver/documents",
-    icon: <DocsIcon />,
-  },
+  { label: "Overview", href: "/driver", icon: <HomeIcon /> },
+  { label: "My Trips", href: "/driver/trips", icon: <TripsIcon /> },
+  { label: "Profile", href: "/driver/profile", icon: <ProfileIcon /> },
+  { label: "Documents", href: "/driver/documents", icon: <DocsIcon /> },
 ];
 
 // ─── Icons ────────────────────────────────────────────────────
 function HomeIcon() {
   return (
     <svg
-      className="w-5 h-5"
+      className="w-5 h-5 flex-shrink-0"
       fill="none"
       stroke="currentColor"
       viewBox="0 0 24 24"
@@ -75,11 +41,10 @@ function HomeIcon() {
     </svg>
   );
 }
-
 function DriversIcon() {
   return (
     <svg
-      className="w-5 h-5"
+      className="w-5 h-5 flex-shrink-0"
       fill="none"
       stroke="currentColor"
       viewBox="0 0 24 24"
@@ -93,11 +58,10 @@ function DriversIcon() {
     </svg>
   );
 }
-
 function TripsIcon() {
   return (
     <svg
-      className="w-5 h-5"
+      className="w-5 h-5 flex-shrink-0"
       fill="none"
       stroke="currentColor"
       viewBox="0 0 24 24"
@@ -111,11 +75,10 @@ function TripsIcon() {
     </svg>
   );
 }
-
 function AnalyticsIcon() {
   return (
     <svg
-      className="w-5 h-5"
+      className="w-5 h-5 flex-shrink-0"
       fill="none"
       stroke="currentColor"
       viewBox="0 0 24 24"
@@ -129,11 +92,10 @@ function AnalyticsIcon() {
     </svg>
   );
 }
-
 function ProfileIcon() {
   return (
     <svg
-      className="w-5 h-5"
+      className="w-5 h-5 flex-shrink-0"
       fill="none"
       stroke="currentColor"
       viewBox="0 0 24 24"
@@ -147,11 +109,10 @@ function ProfileIcon() {
     </svg>
   );
 }
-
 function DocsIcon() {
   return (
     <svg
-      className="w-5 h-5"
+      className="w-5 h-5 flex-shrink-0"
       fill="none"
       stroke="currentColor"
       viewBox="0 0 24 24"
@@ -165,11 +126,10 @@ function DocsIcon() {
     </svg>
   );
 }
-
 function SettingsIcon() {
   return (
     <svg
-      className="w-5 h-5"
+      className="w-5 h-5 flex-shrink-0"
       fill="none"
       stroke="currentColor"
       viewBox="0 0 24 24"
@@ -196,6 +156,7 @@ interface SidebarProps {
   userName?: string;
   userEmail?: string;
   isOpen: boolean;
+  collapsed: boolean;
   onClose: () => void;
 }
 
@@ -205,6 +166,7 @@ export function DashboardSidebar({
   userName = "User",
   userEmail = "",
   isOpen,
+  collapsed,
   onClose,
 }: SidebarProps) {
   const pathname = usePathname();
@@ -212,29 +174,55 @@ export function DashboardSidebar({
 
   const SidebarContent = (
     <div className="flex flex-col h-full">
-      {/* Logo */}
-      <div className="h-16 flex items-center justify-between px-5 border-b border-border flex-shrink-0">
-        <div className="flex items-center gap-2">
-          <span className="text-xl font-bold text-primary">Sarthigo</span>
-          <span className="text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary font-medium capitalize">
-            {role}
-          </span>
-        </div>
-        {/* Close — mobile only */}
-        <button
-          onClick={onClose}
-          className="md:hidden p-1.5 rounded-lg hover:bg-muted text-muted-foreground"
-        >
-          <X className="w-4 h-4" />
-        </button>
+      {/* ── Logo ──────────────────────────────────────────── */}
+      <div
+        className={cn(
+          "h-16 flex items-center border-b border-border flex-shrink-0 transition-all duration-300",
+          collapsed ? "justify-center px-3" : "justify-between px-5",
+        )}
+      >
+        {collapsed ? (
+          /* Icon only when collapsed */
+          <Image
+            src={siteConfig.logoSingle}
+            alt={siteConfig.name}
+            width={32}
+            height={32}
+            className="flex-shrink-0"
+          />
+        ) : (
+          <>
+            <div className="flex items-center gap-2">
+              <Image
+                src={siteConfig.logoSingle}
+                alt={siteConfig.name}
+                width={28}
+                height={28}
+                className="flex-shrink-0"
+              />
+              <span className="text-xl font-bold text-primary">
+                {siteConfig.name}
+              </span>
+              <span className="text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary font-medium capitalize">
+                {role}
+              </span>
+            </div>
+            {/* Close — mobile only */}
+            <button
+              onClick={onClose}
+              className="md:hidden p-1.5 rounded-lg hover:bg-muted text-muted-foreground"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </>
+        )}
       </div>
 
-      {/* Nav */}
-      <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
+      {/* ── Nav ───────────────────────────────────────────── */}
+      <nav className="flex-1 px-2 py-4 space-y-1 overflow-y-auto">
         {navItems.map((item) => {
           const isActive =
-            item.href === "/dashboard/admin" ||
-            item.href === "/dashboard/driver"
+            item.href === "/admin" || item.href === "/driver"
               ? pathname === item.href
               : pathname.startsWith(item.href);
 
@@ -243,47 +231,71 @@ export function DashboardSidebar({
               key={item.href}
               href={item.href}
               onClick={onClose}
+              title={collapsed ? item.label : undefined}
               className={cn(
-                "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150",
+                "flex items-center rounded-lg text-sm font-medium transition-all duration-150 group relative",
+                collapsed ? "justify-center p-2.5" : "gap-3 px-3 py-2.5",
                 isActive
                   ? "bg-primary text-primary-foreground shadow-sm"
                   : "text-muted-foreground hover:bg-muted hover:text-foreground",
               )}
             >
               {item.icon}
-              {item.label}
+
+              {/* Label */}
+              {!collapsed && item.label}
+
+              {/* Tooltip when collapsed */}
+              {collapsed && (
+                <span className="absolute left-full ml-3 px-2 py-1 bg-popover border border-border text-foreground text-xs rounded-md shadow-md opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-50 pointer-events-none">
+                  {item.label}
+                </span>
+              )}
             </Link>
           );
         })}
       </nav>
 
-      {/* User */}
-      <div className="p-3 border-t border-border flex-shrink-0">
-        <div className="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-muted">
-          <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary font-semibold text-sm flex-shrink-0">
-            {userName.charAt(0).toUpperCase()}
+      {/* ── User ──────────────────────────────────────────── */}
+      <div className="p-2 border-t border-border flex-shrink-0">
+        {collapsed ? (
+          <div className="flex justify-center py-2">
+            <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary font-semibold text-sm">
+              {userName.charAt(0).toUpperCase()}
+            </div>
           </div>
-          <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-foreground truncate">
-              {userName}
-            </p>
-            <p className="text-xs text-muted-foreground truncate">
-              {userEmail}
-            </p>
+        ) : (
+          <div className="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-muted">
+            <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary font-semibold text-sm flex-shrink-0">
+              {userName.charAt(0).toUpperCase()}
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-medium text-foreground truncate">
+                {userName}
+              </p>
+              <p className="text-xs text-muted-foreground truncate">
+                {userEmail}
+              </p>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
 
   return (
     <>
-      {/* ── Desktop Sidebar — sticky ────────────────────────── */}
-      <aside className="hidden md:flex w-64 flex-col sticky top-0 h-screen border-r bg-sidebar border-border flex-shrink-0">
+      {/* ── Desktop Sidebar ──────────────────────────────── */}
+      <aside
+        className={cn(
+          "hidden md:flex flex-col sticky top-0 h-screen border-r bg-sidebar border-border flex-shrink-0 transition-all duration-300",
+          collapsed ? "w-16" : "w-64",
+        )}
+      >
         {SidebarContent}
       </aside>
 
-      {/* ── Mobile Overlay ──────────────────────────────────── */}
+      {/* ── Mobile Overlay ───────────────────────────────── */}
       {isOpen && (
         <div
           className="fixed inset-0 z-40 bg-black/50 md:hidden"
@@ -291,7 +303,7 @@ export function DashboardSidebar({
         />
       )}
 
-      {/* ── Mobile Drawer ───────────────────────────────────── */}
+      {/* ── Mobile Drawer ────────────────────────────────── */}
       <aside
         className={cn(
           "fixed top-0 left-0 z-50 h-full w-72 bg-sidebar border-r border-border flex flex-col md:hidden transition-transform duration-300 ease-in-out",

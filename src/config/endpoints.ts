@@ -52,6 +52,23 @@ export const PERMISSION_ENDPOINTS = {
 } as const;
 
 /**
+ * Owner Management Endpoints
+ */
+export const OWNER_ENDPOINTS = {
+  LIST: "/owners",
+  DETAIL: (id: string) => `/owners/${id}`,
+  ME: "/owners/me",
+  CREATE: "/owners",
+  UPDATE: (id: string) => `/owners/${id}`,
+  DELETE: (id: string) => `/owners/${id}`,
+  HARD_DELETE: (id: string) => `/owners/${id}/hard-delete`,
+  VERIFY: (id: string) => `/owners/${id}/verify`,
+  TOGGLE_ACTIVE: (id: string) => `/owners/${id}/toggle-active`,
+  DRIVERS: (id: string) => `/owners/${id}/drivers`,
+  CARS: (id: string) => `/owners/${id}/cars`,
+} as const;
+
+/**
  * Driver Management Endpoints
  */
 export const DRIVER_ENDPOINTS = {
@@ -63,14 +80,38 @@ export const DRIVER_ENDPOINTS = {
 } as const;
 
 /**
- * Ride Management Endpoints
+ * Car Management Endpoints
  */
-export const RIDE_ENDPOINTS = {
-  LIST: "/rides",
-  GET: (id: string) => `/rides/${id}`,
-  CREATE: "/rides",
-  UPDATE: (id: string) => `/rides/${id}`,
-  DELETE: (id: string) => `/rides/${id}`,
+export const CAR_ENDPOINTS = {
+  LIST: "/cars",
+  GET: (id: string) => `/cars/${id}`,
+  CREATE: "/cars",
+  UPDATE: (id: string) => `/cars/${id}`,
+  DELETE: (id: string) => `/cars/${id}`,
+} as const;
+
+/**
+ * City Management Endpoints
+ */
+export const CITY_ENDPOINTS = {
+  LIST: "/cities",
+  DETAIL: (id: string) => `/cities/${id}`,
+  GET: (id: string) => `/cities/${id}`,
+  CREATE: "/cities",
+  UPDATE: (id: string) => `/cities/${id}`,
+  DELETE: (id: string) => `/cities/${id}`,
+  TOGGLE_ACTIVE: (id: string) => `/cities/${id}/toggle-active`,
+} as const;
+
+/**
+ * Package Management Endpoints
+ */
+export const PACKAGE_ENDPOINTS = {
+  LIST: "/packages",
+  GET: (id: string) => `/packages/${id}`,
+  CREATE: "/packages",
+  UPDATE: (id: string) => `/packages/${id}`,
+  DELETE: (id: string) => `/packages/${id}`,
 } as const;
 
 /**
@@ -85,11 +126,26 @@ export const BOOKING_ENDPOINTS = {
 } as const;
 
 /**
+ * Trip Assignment Endpoints
+ */
+export const TRIP_ENDPOINTS = {
+  LIST: "/trips",
+  GET: (id: string) => `/trips/${id}`,
+  CREATE: "/trips",
+  UPDATE: (id: string) => `/trips/${id}`,
+  DELETE: (id: string) => `/trips/${id}`,
+  BY_BOOKING: (bookingId: string) => `/trips/booking/${bookingId}`,
+} as const;
+
+/**
  * Admin Endpoints
  */
 export const ADMIN_ENDPOINTS = {
   DASHBOARD: "/admin/dashboard",
   STATS: "/admin/stats",
+  VERIFY_OWNER: (id: string) => `/admin/verify-owner/${id}`,
+  VERIFY_DRIVER: (id: string) => `/admin/verify-driver/${id}`,
+  VERIFY_CAR: (id: string) => `/admin/verify-car/${id}`,
 } as const;
 
 /**
@@ -107,8 +163,12 @@ export const ENDPOINTS = {
   USER: USER_ENDPOINTS,
   ROLE: ROLE_ENDPOINTS,
   PERMISSION: PERMISSION_ENDPOINTS,
-  DRIVER: DRIVER_ENDPOINTS,
-  RIDE: RIDE_ENDPOINTS,
-  BOOKING: BOOKING_ENDPOINTS,
+  OWNERS: OWNER_ENDPOINTS,
+  DRIVERS: DRIVER_ENDPOINTS,
+  CARS: CAR_ENDPOINTS,
+  CITIES: CITY_ENDPOINTS,
+  PACKAGES: PACKAGE_ENDPOINTS,
+  BOOKINGS: BOOKING_ENDPOINTS,
+  TRIPS: TRIP_ENDPOINTS,
   ADMIN: ADMIN_ENDPOINTS,
 } as const;

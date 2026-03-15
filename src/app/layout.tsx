@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans, Inter } from "next/font/google";
 import "./globals.css";
 import { MotionProvider } from "@/components/providers/motion-provider";
+import { QueryProvider } from "@/providers/query-provider";
+import { Toaster } from "@/components/ui/sonner";
 import { siteConfig } from "@/constants";
 
 const fontHeading = Plus_Jakarta_Sans({
@@ -99,7 +101,10 @@ export default function RootLayout({
       <body
         className={`${fontHeading.variable} ${fontBase.variable} font-base antialiased`}
       >
-        <MotionProvider>{children}</MotionProvider>
+        <QueryProvider>
+          <MotionProvider>{children}</MotionProvider>
+          <Toaster />
+        </QueryProvider>
       </body>
     </html>
   );

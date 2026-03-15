@@ -11,22 +11,43 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { siteConfig } from "@/constants/site";
-import {
-  loginSchema,
-  type LoginSchema,
-  DUMMY_CREDENTIALS,
-} from "@/lib/validations/auth";
+import { loginSchema, type LoginSchema } from "@/lib/validations/auth";
+import { useLogin } from "@/services/auth.service";
+import { getErrorMessage } from "@/lib/axios/axios-config";
+import { toast } from "sonner";
+
+// Demo credentials for quick testing
+const DEMO_CREDENTIALS = {
+  superadmin: {
+    email: "superadmin@sarthi.com",
+    password: "SuperAdmin@123",
+    role: "superadmin",
+    redirect: "/admin/dashboard",
+  },
+  admin: {
+    email: "admin@sarthigo.com",
+    password: "Admin@1234",
+    role: "admin",
+    redirect: "/admin/dashboard",
+  },
+  driver: {
+    email: "driver@sarthigo.com",
+    password: "Driver@1234",
+    role: "driver",
+    redirect: "/driver/dashboard",
+  },
+};
 
 export default function LoginPage() {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
-  const [serverError, setServerError] = useState("");
+  const { mutate: login, isPending } = useLogin();
 
   const {
     register,
     handleSubmit,
     setValue,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
     defaultValues: { email: "", password: "" },
@@ -34,29 +55,35 @@ export default function LoginPage() {
 
   // ─── Submit ─────────────────────────────────────────────────
   const onSubmit = async (data: LoginSchema) => {
-    console.log("data: ", data);
-    setServerError("");
+    login(data, {
+      onSuccess: (response) => {
+        toast.success("Login successful!", {
+          description: `Welcome back, ${response.user.firstName || response.user.email}!`,
+        });
 
-    // Simulate network delay
-    await new Promise((r) => setTimeout(r, 1000));
+        // Redirect based on user role
+        const roleName = response.user.role.name.toLowerCase();
 
-    const match = DUMMY_CREDENTIALS.find(
-      (c) => c.email === data.email && c.password === data.password,
-    );
-
-    if (!match) {
-      setServerError(
-        "Invalid email or password. Use the demo credentials below.",
-      );
-      return;
-    }
-
-    router.push(match.redirect);
+        if (roleName === "superadmin" || roleName === "admin") {
+          router.push("/admin");
+        } else if (roleName === "driver") {
+          router.push("/driver/dashboard");
+        } else {
+          router.push("/dashboard");
+        }
+      },
+      onError: (error) => {
+        const errorMessage = getErrorMessage(error);
+        toast.error("Login failed", {
+          description: errorMessage,
+        });
+      },
+    });
   };
 
   // ─── Quick fill helpers ──────────────────────────────────────
-  const fillCreds = (role: "admin" | "driver") => {
-    const cred = DUMMY_CREDENTIALS.find((c) => c.role === role)!;
+  const fillCreds = (role: keyof typeof DEMO_CREDENTIALS) => {
+    const cred = DEMO_CREDENTIALS[role];
     setValue("email", cred.email, { shouldValidate: true });
     setValue("password", cred.password, { shouldValidate: true });
   };
@@ -90,35 +117,38 @@ export default function LoginPage() {
           <Info className="w-3.5 h-3.5 flex-shrink-0" />
           Demo Credentials — click to auto-fill
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-col gap-2">
           <button
             type="button"
-            onClick={() => fillCreds("admin")}
+            onClick={() => fillCreds("superadmin")}
             className="flex-1 text-left bg-background border border-border rounded-lg px-3 py-2 text-xs hover:border-primary/50 transition-colors"
           >
-            <p className="font-semibold text-foreground">Admin</p>
-            <p className="text-muted-foreground">admin@sarthigo.com</p>
-            <p className="text-muted-foreground">Admin@1234</p>
+            <p className="font-semibold text-foreground">Super Admin</p>
+            <p className="text-muted-foreground">superadmin@sarthi.com</p>
+            <p className="text-muted-foreground">SuperAdmin@123</p>
           </button>
-          <button
-            type="button"
-            onClick={() => fillCreds("driver")}
-            className="flex-1 text-left bg-background border border-border rounded-lg px-3 py-2 text-xs hover:border-primary/50 transition-colors"
-          >
-            <p className="font-semibold text-foreground">Driver</p>
-            <p className="text-muted-foreground">driver@sarthigo.com</p>
-            <p className="text-muted-foreground">Driver@1234</p>
-          </button>
+          <div className="flex gap-2">
+            <button
+              type="button"
+              onClick={() => fillCreds("admin")}
+              className="flex-1 text-left bg-background border border-border rounded-lg px-3 py-2 text-xs hover:border-primary/50 transition-colors"
+            >
+              <p className="font-semibold text-foreground">Admin</p>
+              <p className="text-muted-foreground">admin@sarthigo.com</p>
+              <p className="text-muted-foreground">Admin@1234</p>
+            </button>
+            <button
+              type="button"
+              onClick={() => fillCreds("driver")}
+              className="flex-1 text-left bg-background border border-border rounded-lg px-3 py-2 text-xs hover:border-primary/50 transition-colors"
+            >
+              <p className="font-semibold text-foreground">Driver</p>
+              <p className="text-muted-foreground">driver@sarthigo.com</p>
+              <p className="text-muted-foreground">Driver@1234</p>
+            </button>
+          </div>
         </div>
       </div>
-
-      {/* Server Error */}
-      {serverError && (
-        <div className="flex items-center gap-2 bg-red-500/10 border border-red-500/20 text-red-600 px-4 py-3 rounded-lg text-sm">
-          <AlertCircle className="w-4 h-4 flex-shrink-0" />
-          {serverError}
-        </div>
-      )}
 
       {/* Form */}
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5" noValidate>
@@ -184,8 +214,8 @@ export default function LoginPage() {
         </div>
 
         {/* Submit */}
-        <Button type="submit" className="w-full" disabled={isSubmitting}>
-          {isSubmitting ? (
+        <Button type="submit" className="w-full" disabled={isPending}>
+          {isPending ? (
             <>
               <Loader2 className="w-4 h-4 mr-2 animate-spin" />
               Signing in...

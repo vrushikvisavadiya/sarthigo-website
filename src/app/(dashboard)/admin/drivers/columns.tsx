@@ -43,7 +43,13 @@ import { toast } from "sonner";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-function DriverActions({ driver }: { driver: Driver }) {
+function DriverActions({
+  driver,
+  onEdit,
+}: {
+  driver: Driver;
+  onEdit?: (driver: Driver) => void;
+}) {
   const router = useRouter();
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [showHardDeleteDialog, setShowHardDeleteDialog] = useState(false);
@@ -130,7 +136,11 @@ function DriverActions({ driver }: { driver: Driver }) {
             View Details
           </DropdownMenuItem>
           <DropdownMenuItem
-            onClick={() => router.push(`/admin/drivers/${driver.id}/edit`)}
+            onClick={() =>
+              onEdit
+                ? onEdit(driver)
+                : router.push(`/admin/drivers/${driver.id}/edit`)
+            }
           >
             <Edit className="mr-2 h-4 w-4" />
             Edit
@@ -214,7 +224,9 @@ function DriverActions({ driver }: { driver: Driver }) {
   );
 }
 
-export const driverColumns: ColumnDef<Driver>[] = [
+export const driverColumns = (
+  onEdit?: (driver: Driver) => void,
+): ColumnDef<Driver>[] => [
   {
     accessorKey: "name",
     header: "Driver",
@@ -316,6 +328,6 @@ export const driverColumns: ColumnDef<Driver>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => <DriverActions driver={row.original} />,
+    cell: ({ row }) => <DriverActions driver={row.original} onEdit={onEdit} />,
   },
 ];

@@ -11,6 +11,8 @@ export interface Driver {
   phone: string;
   licenseNumber: string;
   verified: boolean;
+  verifiedAt?: string | null;
+  verifiedBy?: string | null;
   isActive: boolean;
   rating: number;
   totalTrips: number;

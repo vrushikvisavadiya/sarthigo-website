@@ -89,11 +89,14 @@ export function EditDriverForm({ driver, onSuccess }: EditDriverFormProps) {
               </div>
             ) : owners && owners.length > 0 ? (
               owners
-                .filter((owner) => owner.isActive)
+                .filter((owner) => owner.isActive && owner.ownerProfile)
                 .map((owner) => (
-                  <SelectItem key={owner.id} value={owner.id}>
+                  <SelectItem
+                    key={owner.ownerProfile.id}
+                    value={owner.ownerProfile.id}
+                  >
                     {owner.firstName} {owner.lastName} -{" "}
-                    {owner.ownerProfile?.companyName}
+                    {owner.ownerProfile.companyName}
                   </SelectItem>
                 ))
             ) : (

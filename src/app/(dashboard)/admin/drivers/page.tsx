@@ -5,7 +5,7 @@ import { Plus, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/ui/data-table";
 import { driverColumns } from "./columns";
-import { useDrivers } from "@/services/drivers.service";
+import { useDrivers, Driver } from "@/services/drivers.service";
 import {
   Dialog,
   DialogContent,
@@ -13,10 +13,23 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { CreateDriverForm } from "./create-driver-form";
+import { EditDriverForm } from "./edit-driver-form";
 
 export default function DriversPage() {
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [selectedDriver, setSelectedDriver] = useState<Driver | null>(null);
   const { data: drivers, isLoading, error } = useDrivers();
+
+  const handleEdit = (driver: Driver) => {
+    setSelectedDriver(driver);
+    setIsEditDialogOpen(true);
+  };
+
+  const handleEditSuccess = () => {
+    setIsEditDialogOpen(false);
+    setSelectedDriver(null);
+  };
 
   if (isLoading) {
     return (
@@ -90,8 +103,8 @@ export default function DriversPage() {
       </div>
 
       {/* Data Table */}
-      <div className="rounded-lg border bg-card">
-        <DataTable columns={driverColumns} data={drivers || []} />
+      <div className="">
+        <DataTable columns={driverColumns(handleEdit)} data={drivers || []} />
       </div>
 
       {/* Create Driver Dialog */}
@@ -101,6 +114,21 @@ export default function DriversPage() {
             <DialogTitle>Add New Driver</DialogTitle>
           </DialogHeader>
           <CreateDriverForm onSuccess={() => setIsCreateDialogOpen(false)} />
+        </DialogContent>
+      </Dialog>
+
+      {/* Edit Driver Dialog */}
+      <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>Edit Driver</DialogTitle>
+          </DialogHeader>
+          {selectedDriver && (
+            <EditDriverForm
+              driver={selectedDriver}
+              onSuccess={handleEditSuccess}
+            />
+          )}
         </DialogContent>
       </Dialog>
     </div>

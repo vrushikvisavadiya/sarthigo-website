@@ -96,7 +96,7 @@ export default function CitiesPage() {
       </div>
 
       {/* Data Table */}
-      <div className="rounded-lg border bg-card">
+      <div className="">
         <DataTable columns={cityColumns} data={cities || []} />
       </div>
 

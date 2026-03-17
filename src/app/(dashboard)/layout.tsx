@@ -20,13 +20,31 @@ export default function DashboardLayout({
   const role: "admin" | "driver" =
     userRole === "admin" || userRole === "superadmin" ? "admin" : "driver";
 
+  // Format user display name
+  const getDisplayName = () => {
+    if (!user) return "User";
+
+    const firstName = user.firstName?.trim();
+    const lastName = user.lastName?.trim();
+
+    if (firstName && lastName) {
+      return `${firstName} ${lastName}`;
+    }
+    if (firstName) return firstName;
+    if (lastName) return lastName;
+    return user.email || "User";
+  };
+
+  const displayName = getDisplayName();
+  const userEmail = user?.email || "";
+
   return (
     <AuthGuard>
       <div className="flex h-screen w-full overflow-hidden bg-muted/30">
         <DashboardSidebar
           role={role}
-          userName={user?.firstName || user?.email || "User"}
-          userEmail={user?.email || ""}
+          userName={displayName}
+          userEmail={userEmail}
           isOpen={sidebarOpen}
           collapsed={collapsed}
           onClose={() => setSidebarOpen(false)}
@@ -34,7 +52,7 @@ export default function DashboardLayout({
         <div className="flex flex-1 flex-col min-w-0 overflow-hidden">
           <DashboardTopbar
             role={role}
-            userName={user?.firstName || user?.email || "User"}
+            userName={displayName}
             onMenuClick={() => setSidebarOpen(true)}
             onCollapseClick={() => setCollapsed(!collapsed)}
             collapsed={collapsed}

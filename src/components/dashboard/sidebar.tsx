@@ -301,18 +301,23 @@ export function DashboardSidebar({
       {/* ── User ──────────────────────────────────────────── */}
       <div className="p-2 border-t border-border flex-shrink-0">
         {collapsed ? (
-          <div className="flex justify-center py-2">
+          <div className="flex justify-center py-2 group relative">
             <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary font-semibold text-sm">
               {userName.charAt(0).toUpperCase()}
             </div>
+            {/* Tooltip when collapsed */}
+            <div className="absolute left-full ml-3 px-3 py-2 bg-popover border border-border text-foreground text-xs rounded-md shadow-md opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-50 pointer-events-none">
+              <p className="font-medium">{userName}</p>
+              <p className="text-muted-foreground">{userEmail}</p>
+            </div>
           </div>
         ) : (
-          <div className="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-muted">
-            <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary font-semibold text-sm flex-shrink-0">
+          <div className="flex items-center gap-3 px-3 py-3 rounded-lg bg-muted/50 border border-border/50">
+            <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-semibold flex-shrink-0">
               {userName.charAt(0).toUpperCase()}
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-foreground truncate">
+              <p className="text-sm font-semibold text-foreground truncate">
                 {userName}
               </p>
               <p className="text-xs text-muted-foreground truncate">

@@ -1,9 +1,24 @@
 "use client";
 
 import Image from "next/image";
-import { usePathname } from "next/navigation";
-import { Menu, PanelLeftClose, PanelLeftOpen } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import {
+  Menu,
+  PanelLeftClose,
+  PanelLeftOpen,
+  LogOut,
+  User,
+} from "lucide-react";
 import { siteConfig } from "@/constants/site";
+import { useLogout, useAuthState } from "@/services/auth.service";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 // ─── Nav Labels ───────────────────────────────────────────────
 const ADMIN_NAV = [
@@ -36,7 +51,10 @@ export function DashboardTopbar({
   onCollapseClick,
   collapsed,
 }: TopbarProps) {
+  const router = useRouter();
   const pathname = usePathname();
+  const { user } = useAuthState();
+  const { mutate: logout } = useLogout();
   const navItems = role === "admin" ? ADMIN_NAV : DRIVER_NAV;
 
   const pageTitle =
@@ -45,6 +63,14 @@ export function DashboardTopbar({
         ? pathname === n.href
         : pathname.startsWith(n.href),
     )?.label ?? "Dashboard";
+
+  const handleLogout = () => {
+    logout(undefined, {
+      onSuccess: () => {
+        router.push("/login");
+      },
+    });
+  };
 
   return (
     <header className="sticky top-0 z-30 h-16 border-b border-border bg-background/80 backdrop-blur-sm flex items-center justify-between px-4 md:px-6 flex-shrink-0">
@@ -93,39 +119,42 @@ export function DashboardTopbar({
 
       {/* Right */}
       <div className="flex items-center gap-3">
-        {/* Avatar + Name */}
-        <div className="hidden sm:flex items-center gap-2">
-          <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-semibold text-sm">
-            {userName.charAt(0).toUpperCase()}
-          </div>
-          <span className="text-sm font-medium text-foreground">
-            {userName}
-          </span>
-        </div>
-
-        {/* Divider */}
-        <div className="hidden sm:block w-px h-5 bg-border" />
-
-        {/* Logout */}
-        <button
-          onClick={() => console.log("logout")}
-          className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors px-3 py-2 rounded-lg hover:bg-muted"
-        >
-          <svg
-            className="w-4 h-4"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-            />
-          </svg>
-          <span className="hidden sm:block">Logout</span>
-        </button>
+        {/* User Dropdown Menu */}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <button className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-muted transition-colors">
+              <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-semibold text-sm">
+                {userName.charAt(0).toUpperCase()}
+              </div>
+              <span className="hidden sm:block text-sm font-medium text-foreground">
+                {userName}
+              </span>
+            </button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-56">
+            <DropdownMenuLabel>
+              <div className="flex flex-col space-y-1">
+                <p className="text-sm font-medium leading-none">{userName}</p>
+                <p className="text-xs leading-none text-muted-foreground">
+                  {user?.email}
+                </p>
+              </div>
+            </DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem className="cursor-pointer">
+              <User className="mr-2 h-4 w-4" />
+              <span>Profile</span>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              className="cursor-pointer text-destructive focus:text-destructive"
+              onClick={handleLogout}
+            >
+              <LogOut className="mr-2 h-4 w-4" />
+              <span>Logout</span>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </header>
   );

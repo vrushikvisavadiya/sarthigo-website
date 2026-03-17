@@ -171,7 +171,7 @@ export function CreateOwnerForm({ onSuccess }: CreateOwnerFormProps) {
             value={selectedCity}
             onValueChange={(value) => setValue("city", value)}
           >
-            <SelectTrigger>
+            <SelectTrigger className="w-full">
               <SelectValue placeholder="Select a city" />
             </SelectTrigger>
             <SelectContent>

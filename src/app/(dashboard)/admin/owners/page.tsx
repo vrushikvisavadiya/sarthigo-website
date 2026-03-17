@@ -90,7 +90,7 @@ export default function OwnersPage() {
       </div>
 
       {/* Data Table */}
-      <div className="rounded-lg border bg-card">
+      <div className="">
         <DataTable columns={ownerColumns} data={owners || []} />
       </div>
 

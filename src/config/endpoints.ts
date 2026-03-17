@@ -73,10 +73,14 @@ export const OWNER_ENDPOINTS = {
  */
 export const DRIVER_ENDPOINTS = {
   LIST: "/drivers",
-  GET: (id: string) => `/drivers/${id}`,
+  DETAIL: (id: string) => `/drivers/${id}`,
+  BY_OWNER: (ownerId: string) => `/drivers/owner/${ownerId}`,
   CREATE: "/drivers",
   UPDATE: (id: string) => `/drivers/${id}`,
   DELETE: (id: string) => `/drivers/${id}`,
+  HARD_DELETE: (id: string) => `/drivers/${id}/hard-delete`,
+  VERIFY: (id: string) => `/drivers/${id}/verify`,
+  TOGGLE_ACTIVE: (id: string) => `/drivers/${id}/toggle-active`,
 } as const;
 
 /**
@@ -84,10 +88,14 @@ export const DRIVER_ENDPOINTS = {
  */
 export const CAR_ENDPOINTS = {
   LIST: "/cars",
-  GET: (id: string) => `/cars/${id}`,
+  DETAIL: (id: string) => `/cars/${id}`,
+  BY_OWNER: (ownerId: string) => `/cars/owner/${ownerId}`,
   CREATE: "/cars",
   UPDATE: (id: string) => `/cars/${id}`,
   DELETE: (id: string) => `/cars/${id}`,
+  HARD_DELETE: (id: string) => `/cars/${id}/hard-delete`,
+  VERIFY: (id: string) => `/cars/${id}/verify`,
+  TOGGLE_ACTIVE: (id: string) => `/cars/${id}/toggle-active`,
 } as const;
 
 /**

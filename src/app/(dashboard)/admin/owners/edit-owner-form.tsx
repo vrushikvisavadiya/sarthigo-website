@@ -203,7 +203,7 @@ export function EditOwnerForm({ owner, onSuccess }: EditOwnerFormProps) {
             value={selectedCity}
             onValueChange={(value) => setValue("city", value)}
           >
-            <SelectTrigger>
+            <SelectTrigger className="w-full">
               <SelectValue placeholder="Select a city" />
             </SelectTrigger>
             <SelectContent>

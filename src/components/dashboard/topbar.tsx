@@ -24,6 +24,8 @@ import {
 const ADMIN_NAV = [
   { label: "Overview", href: "/admin" },
   { label: "Drivers", href: "/admin/drivers" },
+  { label: "Vehicles", href: "/admin/cars" },
+  { label: "Vehicle Types", href: "/admin/vehicle-types" },
   { label: "Trips", href: "/admin/trips" },
   { label: "Analytics", href: "/admin/analytics" },
   { label: "Settings", href: "/admin/settings" },

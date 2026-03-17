@@ -99,6 +99,19 @@ export const CAR_ENDPOINTS = {
 } as const;
 
 /**
+ * Vehicle Type Management Endpoints
+ */
+export const VEHICLE_TYPE_ENDPOINTS = {
+  LIST: "/vehicle-types",
+  ACTIVE: "/vehicle-types/active",
+  DETAIL: (id: string) => `/vehicle-types/${id}`,
+  CREATE: "/vehicle-types",
+  UPDATE: (id: string) => `/vehicle-types/${id}`,
+  DELETE: (id: string) => `/vehicle-types/${id}`,
+  TOGGLE_ACTIVE: (id: string) => `/vehicle-types/${id}/toggle-active`,
+} as const;
+
+/**
  * City Management Endpoints
  */
 export const CITY_ENDPOINTS = {

@@ -73,7 +73,7 @@ export function CreateDriverForm({ onSuccess }: CreateDriverFormProps) {
           onValueChange={(value) => setValue("ownerId", value)}
           disabled={ownersLoading}
         >
-          <SelectTrigger>
+          <SelectTrigger className="w-full">
             <SelectValue placeholder="Select owner" />
           </SelectTrigger>
           <SelectContent>

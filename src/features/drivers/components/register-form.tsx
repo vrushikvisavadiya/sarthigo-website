@@ -21,6 +21,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { PhoneInput } from "@/components/ui/phone-input";
 import { cn } from "@/lib/utils";
 import { whatsappBookingUrl, siteConfig } from "@/constants";
 import {
@@ -285,17 +286,13 @@ export function RegisterForm() {
 
               <div className="flex flex-col gap-1.5">
                 <Label required>Mobile Number</Label>
-                <div className="relative">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground font-medium">
-                    +91
-                  </span>
-                  <Input
-                    {...register("phone")}
-                    placeholder="9999999999"
-                    maxLength={10}
-                    className="rounded-xl h-11 pl-12"
-                  />
-                </div>
+                <PhoneInput
+                  value={watch("phone")}
+                  onChange={(value) => setValue("phone", value || "")}
+                  placeholder="Enter phone number"
+                  defaultCountry="IN"
+                  className="rounded-xl h-11"
+                />
                 <FieldError message={errors.phone?.message} />
               </div>
 

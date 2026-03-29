@@ -6,6 +6,7 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { PhoneInput } from "@/components/ui/phone-input";
 import {
   Select,
   SelectContent,
@@ -117,7 +118,12 @@ export function CreateDriverForm({ onSuccess }: CreateDriverFormProps) {
       {/* Phone */}
       <div className="space-y-2">
         <Label htmlFor="phone">Phone Number</Label>
-        <Input id="phone" {...register("phone")} placeholder="+1234567890" />
+        <PhoneInput
+          value={watch("phone")}
+          onChange={(value) => setValue("phone", value || "")}
+          placeholder="Enter phone number"
+          defaultCountry="IN"
+        />
         {errors.phone && (
           <p className="text-sm text-red-500">{errors.phone.message}</p>
         )}

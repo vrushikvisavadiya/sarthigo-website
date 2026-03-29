@@ -6,6 +6,14 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import {
   ArrowLeft,
   Building2,
   Mail,
@@ -17,6 +25,8 @@ import {
   CheckCircle,
   XCircle,
   Loader2,
+  Shield,
+  Star,
 } from "lucide-react";
 import { format } from "date-fns";
 
@@ -55,6 +65,9 @@ export default function OwnerDetailsPage() {
       </div>
     );
   }
+
+  const drivers = owner.ownerProfile?.drivers || [];
+  const vehicles = owner.ownerProfile?.cars || [];
 
   return (
     <div className="space-y-6">
@@ -174,7 +187,7 @@ export default function OwnerDetailsPage() {
           <CardContent>
             <div className="text-center py-8">
               <div className="text-4xl font-bold text-primary">
-                {owner.ownerProfile?.drivers?.length || 0}
+                {drivers.length}
               </div>
               <p className="text-sm text-muted-foreground mt-2">
                 Total Drivers
@@ -193,7 +206,7 @@ export default function OwnerDetailsPage() {
           <CardContent>
             <div className="text-center py-8">
               <div className="text-4xl font-bold text-primary">
-                {owner.ownerProfile?.cars?.length || 0}
+                {vehicles.length}
               </div>
               <p className="text-sm text-muted-foreground mt-2">
                 Total Vehicles
@@ -202,6 +215,161 @@ export default function OwnerDetailsPage() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Drivers Table */}
+      {drivers.length > 0 && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Users className="w-5 h-5" />
+              Drivers ({drivers.length})
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="rounded-md border">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Name</TableHead>
+                    <TableHead>Phone</TableHead>
+                    <TableHead>License Number</TableHead>
+                    <TableHead>Rating</TableHead>
+                    <TableHead>Total Trips</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead>Verification</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {drivers.map((driver: any, index: number) => (
+                    <TableRow key={driver.id || index}>
+                      <TableCell className="font-medium">
+                        {driver.name}
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex items-center gap-1">
+                          <Phone className="w-3 h-3 text-muted-foreground" />
+                          {driver.phone}
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex items-center gap-1">
+                          <Shield className="w-3 h-3 text-muted-foreground" />
+                          {driver.licenseNumber}
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        {driver.rating ? (
+                          <div className="flex items-center gap-1">
+                            <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                            <span className="font-medium">{driver.rating}</span>
+                          </div>
+                        ) : (
+                          <span className="text-muted-foreground">N/A</span>
+                        )}
+                      </TableCell>
+                      <TableCell>{driver.totalTrips || 0}</TableCell>
+                      <TableCell>
+                        <Badge
+                          variant={driver.isActive ? "default" : "secondary"}
+                        >
+                          {driver.isActive ? "Active" : "Inactive"}
+                        </Badge>
+                      </TableCell>
+                      <TableCell>
+                        {driver.verified ? (
+                          <Badge variant="default" className="gap-1">
+                            <CheckCircle className="w-3 h-3" />
+                            Verified
+                          </Badge>
+                        ) : (
+                          <Badge variant="secondary" className="gap-1">
+                            <XCircle className="w-3 h-3" />
+                            Pending
+                          </Badge>
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Vehicles Table */}
+      {vehicles.length > 0 && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Car className="w-5 h-5" />
+              Vehicles ({vehicles.length})
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="rounded-md border">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Vehicle Model</TableHead>
+                    <TableHead>Registration No.</TableHead>
+                    <TableHead>Type</TableHead>
+                    <TableHead>Seats</TableHead>
+                    <TableHead>AC</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead>Verification</TableHead>
+                    <TableHead>Verified On</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {vehicles.map((vehicle: any, index: number) => (
+                    <TableRow key={vehicle.id || index}>
+                      <TableCell className="font-medium">
+                        {vehicle.carModel}
+                      </TableCell>
+                      <TableCell>{vehicle.carNumber}</TableCell>
+                      <TableCell>{vehicle.carType}</TableCell>
+                      <TableCell>{vehicle.seats}</TableCell>
+                      <TableCell>
+                        <Badge variant={vehicle.ac ? "default" : "secondary"}>
+                          {vehicle.ac ? "Yes" : "No"}
+                        </Badge>
+                      </TableCell>
+                      <TableCell>
+                        <Badge
+                          variant={vehicle.isActive ? "default" : "secondary"}
+                        >
+                          {vehicle.isActive ? "Active" : "Inactive"}
+                        </Badge>
+                      </TableCell>
+                      <TableCell>
+                        {vehicle.verified ? (
+                          <Badge variant="default" className="gap-1">
+                            <CheckCircle className="w-3 h-3" />
+                            Verified
+                          </Badge>
+                        ) : (
+                          <Badge variant="secondary" className="gap-1">
+                            <XCircle className="w-3 h-3" />
+                            Pending
+                          </Badge>
+                        )}
+                      </TableCell>
+                      <TableCell>
+                        {vehicle.verifiedAt ? (
+                          format(new Date(vehicle.verifiedAt), "MMM dd, yyyy")
+                        ) : (
+                          <span className="text-muted-foreground">-</span>
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Verification Information */}
       {owner.ownerProfile?.verified && owner.ownerProfile?.verifiedAt && (

@@ -21,13 +21,14 @@ import { FaWhatsapp, FaInstagram, FaFacebookF } from "react-icons/fa6";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { PhoneInput } from "@/components/ui/phone-input";
 import { toast } from "sonner";
 import { siteConfig, whatsappBookingUrl } from "@/constants";
 
 // ── Contact Form Schema ────────────────────────
 const contactSchema = z.object({
   name: z.string().min(2, "Name is required"),
-  phone: z.string().regex(/^[6-9]\d{9}$/, "Enter valid 10-digit number"),
+  phone: z.string().min(10, "Enter valid phone number"),
   email: z.string().email("Enter valid email").optional().or(z.literal("")),
   subject: z.enum(["booking", "package", "driver", "other"], {
     error: "Please select a subject",
@@ -81,6 +82,8 @@ function ContactForm() {
     register,
     handleSubmit,
     reset,
+    watch,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema),
@@ -159,17 +162,13 @@ function ContactForm() {
           <label className="text-sm font-medium text-foreground">
             Mobile Number <span className="text-destructive">*</span>
           </label>
-          <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">
-              +91
-            </span>
-            <Input
-              {...register("phone")}
-              placeholder="9999999999"
-              maxLength={10}
-              className="rounded-xl h-11 pl-12"
-            />
-          </div>
+          <PhoneInput
+            value={watch("phone")}
+            onChange={(value) => setValue("phone", value || "")}
+            placeholder="Enter phone number"
+            defaultCountry="IN"
+            className="rounded-xl h-11"
+          />
           {errors.phone && (
             <p className="text-xs text-destructive">{errors.phone.message}</p>
           )}

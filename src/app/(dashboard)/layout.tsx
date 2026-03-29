@@ -15,10 +15,14 @@ export default function DashboardLayout({
   const [collapsed, setCollapsed] = useState(false);
   const { user } = useAuthState();
 
-  // Determine role - default to "driver" if not admin
+  // Determine role - default to "driver" if not admin or owner
   const userRole = user?.role.name.toLowerCase();
-  const role: "admin" | "driver" =
-    userRole === "admin" || userRole === "superadmin" ? "admin" : "driver";
+  const role: "admin" | "driver" | "owner" =
+    userRole === "admin" || userRole === "superadmin"
+      ? "admin"
+      : userRole === "owner"
+        ? "owner"
+        : "driver";
 
   // Format user display name
   const getDisplayName = () => {

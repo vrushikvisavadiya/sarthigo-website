@@ -26,9 +26,19 @@ const ADMIN_NAV = [
   { label: "Drivers", href: "/admin/drivers" },
   { label: "Vehicles", href: "/admin/cars" },
   { label: "Vehicle Types", href: "/admin/vehicle-types" },
+  { label: "Packages", href: "/admin/packages" },
   { label: "Trips", href: "/admin/trips" },
   { label: "Analytics", href: "/admin/analytics" },
   { label: "Settings", href: "/admin/settings" },
+];
+
+const OWNER_NAV = [
+  { label: "Overview", href: "/owner" },
+  { label: "Packages", href: "/owner/packages" },
+  { label: "Drivers", href: "/owner/drivers" },
+  { label: "Vehicles", href: "/owner/cars" },
+  { label: "Trips", href: "/owner/trips" },
+  { label: "Profile", href: "/owner/profile" },
 ];
 
 const DRIVER_NAV = [
@@ -39,7 +49,7 @@ const DRIVER_NAV = [
 ];
 
 interface TopbarProps {
-  role?: "admin" | "driver";
+  role?: "admin" | "driver" | "owner";
   userName?: string;
   onMenuClick: () => void;
   onCollapseClick: () => void;
@@ -57,11 +67,12 @@ export function DashboardTopbar({
   const pathname = usePathname();
   const { user } = useAuthState();
   const { mutate: logout } = useLogout();
-  const navItems = role === "admin" ? ADMIN_NAV : DRIVER_NAV;
+  const navItems =
+    role === "admin" ? ADMIN_NAV : role === "owner" ? OWNER_NAV : DRIVER_NAV;
 
   const pageTitle =
     navItems.find((n) =>
-      n.href === "/admin" || n.href === "/driver"
+      n.href === "/admin" || n.href === "/driver" || n.href === "/owner"
         ? pathname === n.href
         : pathname.startsWith(n.href),
     )?.label ?? "Dashboard";

@@ -19,10 +19,25 @@ const ADMIN_NAV = [
     icon: <VehicleTypesIcon />,
   },
   { label: "Cities", href: "/admin/cities", icon: <CitiesIcon /> },
+  { label: "Packages", href: "/admin/packages", icon: <PackagesIcon /> },
+  {
+    label: "Subscriptions",
+    href: "/admin/subscriptions",
+    icon: <SubscriptionsIcon />,
+  },
   { label: "Trips", href: "/admin/trips", icon: <TripsIcon /> },
   { label: "Roles & Permissions", href: "/admin/roles", icon: <RolesIcon /> },
   { label: "Analytics", href: "/admin/analytics", icon: <AnalyticsIcon /> },
   { label: "Settings", href: "/admin/settings", icon: <SettingsIcon /> },
+];
+
+const OWNER_NAV = [
+  { label: "Overview", href: "/owner", icon: <HomeIcon /> },
+  { label: "Packages", href: "/owner/packages", icon: <PackagesIcon /> },
+  { label: "Drivers", href: "/owner/drivers", icon: <DriversIcon /> },
+  { label: "Vehicles", href: "/owner/cars", icon: <VehiclesIcon /> },
+  { label: "Trips", href: "/owner/trips", icon: <TripsIcon /> },
+  { label: "Profile", href: "/owner/profile", icon: <ProfileIcon /> },
 ];
 
 const DRIVER_NAV = [
@@ -249,10 +264,44 @@ function RolesIcon() {
     </svg>
   );
 }
+function PackagesIcon() {
+  return (
+    <svg
+      className="w-5 h-5 flex-shrink-0"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
+      />
+    </svg>
+  );
+}
+function SubscriptionsIcon() {
+  return (
+    <svg
+      className="w-5 h-5 flex-shrink-0"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
+      />
+    </svg>
+  );
+}
 
 // ─── Props ────────────────────────────────────────────────────
 interface SidebarProps {
-  role?: "admin" | "driver";
+  role?: "admin" | "driver" | "owner";
   userName?: string;
   userEmail?: string;
   isOpen: boolean;
@@ -270,7 +319,8 @@ export function DashboardSidebar({
   onClose,
 }: SidebarProps) {
   const pathname = usePathname();
-  const navItems = role === "admin" ? ADMIN_NAV : DRIVER_NAV;
+  const navItems =
+    role === "admin" ? ADMIN_NAV : role === "owner" ? OWNER_NAV : DRIVER_NAV;
 
   const SidebarContent = (
     <div className="flex flex-col h-full">

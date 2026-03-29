@@ -133,6 +133,22 @@ export const PACKAGE_ENDPOINTS = {
   CREATE: "/packages",
   UPDATE: (id: string) => `/packages/${id}`,
   DELETE: (id: string) => `/packages/${id}`,
+  TOGGLE_ACTIVE: (id: string) => `/packages/${id}/toggle-active`,
+} as const;
+
+/**
+ * Owner Package Subscription Endpoints
+ */
+export const SUBSCRIPTION_ENDPOINTS = {
+  LIST: "/owner-subscriptions",
+  MY_SUBSCRIPTIONS: "/owner-subscriptions/me",
+  BY_OWNER: (ownerId: string) => `/owner-subscriptions?ownerId=${ownerId}`,
+  GET: (id: string) => `/owner-subscriptions/${id}`,
+  CREATE: "/owner-subscriptions",
+  UPDATE: (id: string) => `/owner-subscriptions/${id}`,
+  CANCEL: (id: string) => `/owner-subscriptions/${id}/cancel`,
+  APPROVE: (id: string) => `/owner-subscriptions/${id}/approve`,
+  REJECT: (id: string) => `/owner-subscriptions/${id}/reject`,
 } as const;
 
 /**
@@ -189,7 +205,9 @@ export const ENDPOINTS = {
   CARS: CAR_ENDPOINTS,
   CITIES: CITY_ENDPOINTS,
   PACKAGES: PACKAGE_ENDPOINTS,
+  SUBSCRIPTIONS: SUBSCRIPTION_ENDPOINTS,
   BOOKINGS: BOOKING_ENDPOINTS,
   TRIPS: TRIP_ENDPOINTS,
   ADMIN: ADMIN_ENDPOINTS,
+  VEHICLE_TYPES: VEHICLE_TYPE_ENDPOINTS,
 } as const;

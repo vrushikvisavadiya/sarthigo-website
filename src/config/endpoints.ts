@@ -186,6 +186,30 @@ export const ADMIN_ENDPOINTS = {
 } as const;
 
 /**
+ * Submission Management Endpoints
+ */
+export const SUBMISSION_ENDPOINTS = {
+  LIST: "/submissions",
+  GET: (id: string) => `/submissions/${id}`,
+  CREATE: "/submissions",
+  UPDATE: (id: string) => `/submissions/${id}`,
+  DELETE: (id: string) => `/submissions/${id}`,
+  STATS: "/submissions/stats",
+} as const;
+
+/**
+ * Contact Message Endpoints
+ */
+export const CONTACT_ENDPOINTS = {
+  LIST: "/contact",
+  GET: (id: string) => `/contact/${id}`,
+  CREATE: "/contact",
+  UPDATE: (id: string) => `/contact/${id}`,
+  DELETE: (id: string) => `/contact/${id}`,
+  STATS: "/contact/stats",
+} as const;
+
+/**
  * Helper function to build full URL
  */
 export const buildUrl = (endpoint: string): string => {
@@ -210,4 +234,6 @@ export const ENDPOINTS = {
   TRIPS: TRIP_ENDPOINTS,
   ADMIN: ADMIN_ENDPOINTS,
   VEHICLE_TYPES: VEHICLE_TYPE_ENDPOINTS,
+  SUBMISSIONS: SUBMISSION_ENDPOINTS,
+  CONTACT: CONTACT_ENDPOINTS,
 } as const;

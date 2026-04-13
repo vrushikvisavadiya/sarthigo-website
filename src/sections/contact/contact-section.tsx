@@ -24,6 +24,7 @@ import { Badge } from "@/components/ui/badge";
 import { PhoneInput } from "@/components/ui/phone-input";
 import { toast } from "sonner";
 import { siteConfig, whatsappBookingUrl } from "@/constants";
+import { useSubmitContact } from "@/services/contact.service";
 
 // ── Contact Form Schema ────────────────────────
 const contactSchema = z.object({
@@ -77,6 +78,7 @@ const CONTACT_CARDS = [
 // ── Form ───────────────────────────────────────
 function ContactForm() {
   const [isSuccess, setIsSuccess] = useState(false);
+  const submitContact = useSubmitContact();
 
   const {
     register,
@@ -90,10 +92,22 @@ function ContactForm() {
   });
 
   const onSubmit = async (data: ContactFormData) => {
-    await new Promise((r) => setTimeout(r, 1200));
-    setIsSuccess(true);
-    reset();
-    toast.success("Message sent! We'll get back to you shortly.");
+    try {
+      await submitContact.mutateAsync({
+        name: data.name,
+        phone: data.phone,
+        email: data.email || undefined,
+        subject: data.subject,
+        message: data.message,
+      });
+      setIsSuccess(true);
+      reset();
+      toast.success("Message sent! We'll get back to you shortly.");
+    } catch (error) {
+      toast.error(
+        "Failed to send message. Please try again or WhatsApp us directly.",
+      );
+    }
   };
 
   if (isSuccess) {

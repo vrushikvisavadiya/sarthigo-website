@@ -34,6 +34,10 @@ export const NAV_LINKS: NavLink[] = [
     href: "/packages",
   },
   {
+    label: "Book Now",
+    href: "/book",
+  },
+  {
     label: "For Drivers",
     href: "/drivers/plans",
     children: [

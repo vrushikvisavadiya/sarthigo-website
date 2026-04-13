@@ -1,12 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { axiosAuth } from "@/lib/axios/axios-config";
-import { VEHICLE_TYPE_ENDPOINTS } from "@/config/endpoints";
+import { ENDPOINTS } from "@/config/endpoints";
 
-// Vehicle Type Types
 export interface VehicleType {
   id: string;
   name: string;
-  description?: string | null;
+  description: string | null;
   seats: number;
   isActive: boolean;
   createdAt: string;
@@ -27,131 +26,180 @@ export interface UpdateVehicleTypeDto {
   isActive?: boolean;
 }
 
-// Query Keys
+/**
+ * Query Keys
+ */
 export const vehicleTypeKeys = {
   all: ["vehicle-types"] as const,
   lists: () => [...vehicleTypeKeys.all, "list"] as const,
-  list: (filters?: Record<string, unknown>) =>
-    [...vehicleTypeKeys.lists(), filters] as const,
+  list: () => [...vehicleTypeKeys.lists()] as const,
   active: () => [...vehicleTypeKeys.all, "active"] as const,
   details: () => [...vehicleTypeKeys.all, "detail"] as const,
   detail: (id: string) => [...vehicleTypeKeys.details(), id] as const,
 };
 
-// Fetch all vehicle types
-export const useVehicleTypes = () => {
-  return useQuery({
-    queryKey: vehicleTypeKeys.lists(),
-    queryFn: async () => {
-      const response = await axiosAuth.get<VehicleType[]>(
-        VEHICLE_TYPE_ENDPOINTS.LIST,
-      );
-      return response.data;
-    },
-  });
+export const vehicleTypesService = {
+  /**
+   * Get all active vehicle types
+   */
+  getActive: async (): Promise<VehicleType[]> => {
+    const response = await axiosAuth.get<VehicleType[]>(
+      ENDPOINTS.VEHICLE_TYPES.ACTIVE,
+    );
+    return response.data;
+  },
+
+  /**
+   * Get all vehicle types (admin only)
+   */
+  getAll: async (): Promise<VehicleType[]> => {
+    const response = await axiosAuth.get<VehicleType[]>(
+      ENDPOINTS.VEHICLE_TYPES.LIST,
+    );
+    return response.data;
+  },
+
+  /**
+   * Get a single vehicle type by ID
+   */
+  getById: async (id: string): Promise<VehicleType> => {
+    const response = await axiosAuth.get<VehicleType>(
+      ENDPOINTS.VEHICLE_TYPES.DETAIL(id),
+    );
+    return response.data;
+  },
+
+  /**
+   * Create a new vehicle type (admin only)
+   */
+  create: async (data: CreateVehicleTypeDto): Promise<VehicleType> => {
+    const response = await axiosAuth.post<VehicleType>(
+      ENDPOINTS.VEHICLE_TYPES.CREATE,
+      data,
+    );
+    return response.data;
+  },
+
+  /**
+   * Update a vehicle type (admin only)
+   */
+  update: async (
+    id: string,
+    data: UpdateVehicleTypeDto,
+  ): Promise<VehicleType> => {
+    const response = await axiosAuth.patch<VehicleType>(
+      ENDPOINTS.VEHICLE_TYPES.UPDATE(id),
+      data,
+    );
+    return response.data;
+  },
+
+  /**
+   * Delete a vehicle type (admin only)
+   */
+  delete: async (id: string): Promise<void> => {
+    await axiosAuth.delete(ENDPOINTS.VEHICLE_TYPES.DELETE(id));
+  },
+
+  /**
+   * Toggle active status (admin only)
+   */
+  toggleActive: async (id: string): Promise<VehicleType> => {
+    const response = await axiosAuth.patch<VehicleType>(
+      ENDPOINTS.VEHICLE_TYPES.TOGGLE_ACTIVE(id),
+    );
+    return response.data;
+  },
 };
 
-// Fetch active vehicle types only
+/**
+ * React Query Hooks
+ */
+
+/**
+ * Hook to get all active vehicle types
+ */
 export const useActiveVehicleTypes = () => {
   return useQuery({
     queryKey: vehicleTypeKeys.active(),
-    queryFn: async () => {
-      const response = await axiosAuth.get<VehicleType[]>(
-        VEHICLE_TYPE_ENDPOINTS.ACTIVE,
-      );
-      return response.data;
-    },
+    queryFn: vehicleTypesService.getActive,
   });
 };
 
-// Fetch single vehicle type
+/**
+ * Hook to get all vehicle types (admin)
+ */
+export const useVehicleTypes = () => {
+  return useQuery({
+    queryKey: vehicleTypeKeys.list(),
+    queryFn: vehicleTypesService.getAll,
+  });
+};
+
+/**
+ * Hook to get a single vehicle type
+ */
 export const useVehicleType = (id: string) => {
   return useQuery({
     queryKey: vehicleTypeKeys.detail(id),
-    queryFn: async () => {
-      const response = await axiosAuth.get<VehicleType>(
-        VEHICLE_TYPE_ENDPOINTS.DETAIL(id),
-      );
-      return response.data;
-    },
+    queryFn: () => vehicleTypesService.getById(id),
     enabled: !!id,
   });
 };
 
-// Create vehicle type
+/**
+ * Hook to create a vehicle type
+ */
 export const useCreateVehicleType = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (data: CreateVehicleTypeDto) => {
-      const response = await axiosAuth.post<VehicleType>(
-        VEHICLE_TYPE_ENDPOINTS.CREATE,
-        data,
-      );
-      return response.data;
-    },
+    mutationFn: vehicleTypesService.create,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: vehicleTypeKeys.lists() });
-      queryClient.invalidateQueries({ queryKey: vehicleTypeKeys.active() });
+      queryClient.invalidateQueries({ queryKey: vehicleTypeKeys.all });
     },
   });
 };
 
-// Update vehicle type
-export const useUpdateVehicleType = (id: string) => {
+/**
+ * Hook to update a vehicle type
+ */
+export const useUpdateVehicleType = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (data: UpdateVehicleTypeDto) => {
-      const response = await axiosAuth.patch<VehicleType>(
-        VEHICLE_TYPE_ENDPOINTS.UPDATE(id),
-        data,
-      );
-      return response.data;
-    },
+    mutationFn: ({ id, data }: { id: string; data: UpdateVehicleTypeDto }) =>
+      vehicleTypesService.update(id, data),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: vehicleTypeKeys.detail(id) });
-      queryClient.invalidateQueries({ queryKey: vehicleTypeKeys.lists() });
-      queryClient.invalidateQueries({ queryKey: vehicleTypeKeys.active() });
+      queryClient.invalidateQueries({ queryKey: vehicleTypeKeys.all });
     },
   });
 };
 
-// Toggle vehicle type active status
-export const useToggleVehicleTypeActive = () => {
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: async (id: string) => {
-      const response = await axiosAuth.patch<VehicleType>(
-        VEHICLE_TYPE_ENDPOINTS.TOGGLE_ACTIVE(id),
-      );
-      return response.data;
-    },
-    onSuccess: (data) => {
-      queryClient.invalidateQueries({
-        queryKey: vehicleTypeKeys.detail(data.id),
-      });
-      queryClient.invalidateQueries({ queryKey: vehicleTypeKeys.lists() });
-      queryClient.invalidateQueries({ queryKey: vehicleTypeKeys.active() });
-    },
-  });
-};
-
-// Delete vehicle type
+/**
+ * Hook to delete a vehicle type
+ */
 export const useDeleteVehicleType = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (id: string) => {
-      const response = await axiosAuth.delete(
-        VEHICLE_TYPE_ENDPOINTS.DELETE(id),
-      );
-      return response.data;
-    },
+    mutationFn: vehicleTypesService.delete,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: vehicleTypeKeys.lists() });
-      queryClient.invalidateQueries({ queryKey: vehicleTypeKeys.active() });
+      queryClient.invalidateQueries({ queryKey: vehicleTypeKeys.all });
+    },
+  });
+};
+
+/**
+ * Hook to toggle active status
+ */
+export const useToggleVehicleTypeActive = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: vehicleTypesService.toggleActive,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: vehicleTypeKeys.all });
     },
   });
 };
